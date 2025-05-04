@@ -30,12 +30,12 @@ export default function NewSitePage() {
         <nav className="container mx-auto px-6 py-3 flex justify-between items-center">
           <div>
             <Link href="/">
-              <Image
-                src="/images/logos/AE vector-2.png"
-                alt="Robust AE Logo"
-                width={120}
-                height={40}
-                className="dark:invert"
+              <Image 
+                src="/images/logos/AE vector-2.png" 
+                alt="Robust AE Logo" 
+                width={150} 
+                height={50} 
+                className="dark:invert" // Invert logo in dark mode if needed
                />
             </Link>
           </div>
@@ -63,15 +63,6 @@ export default function NewSitePage() {
       {/* Hero Section */}
       <section className="bg-gray-100 dark:bg-gray-900 text-center py-20 px-6">
         <div className="container mx-auto">
-          {/* Add large centered logo */}
-          <Image
-            src="/images/logos/AE vector-2.png"
-            alt="Robust AE Logo - Hero"
-            width={300}  // Larger width
-            height={100} // Larger height (adjust as needed)
-            className="mx-auto mb-8 dark:invert" // Center horizontally, add margin bottom
-            priority // Load this logo early
-          />
           <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
             Robust AE: Engineering Your Vision
           </h1>

@@ -30,12 +30,12 @@ export default function NewSitePage() {
         <nav className="container mx-auto px-6 py-3 flex justify-between items-center">
           <div>
             <Link href="/">
-              <Image
-                src="/images/logos/AE vector-2.png"
-                alt="Robust AE Logo"
-                width={120}
-                height={40}
-                className="dark:invert"
+              <Image 
+                src="/images/logos/AE vector-2.png" 
+                alt="Robust AE Logo" 
+                width={150} 
+                height={50} 
+                className="dark:invert" // Invert logo in dark mode if needed
                />
             </Link>
           </div>
