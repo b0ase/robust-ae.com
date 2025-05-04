@@ -180,7 +180,7 @@ export default function NewSitePage() {
           </p>
           {/* Placeholder for testimonial content */}
           <div className="italic text-gray-700 dark:text-gray-300">
-            &quot;Working with Robust AE was a seamless experience...&quot; - Placeholder Client
+            "Working with Robust AE was a seamless experience..." - Placeholder Client
           </div>
         </div>
       </section>
@@ -194,7 +194,7 @@ export default function NewSitePage() {
               Get In Touch
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">
-              Reach out to discuss your project requirements or book a free consultation. Let&apos;s explore how Robust AE can help bring your ideas to life.
+              Reach out to discuss your project requirements or book a free consultation. Let's explore how Robust AE can help bring your ideas to life.
             </p>
             <div className="space-y-4 text-gray-700 dark:text-gray-300">
               <p>
