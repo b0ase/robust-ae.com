@@ -40,7 +40,7 @@ export const authOptions: NextAuthOptions = {
             // Any object returned will be saved in `user` property of the JWT
             // You can return custom properties like role here
             console.log('Admin login successful for:', email);
-            return { id: "1", name: "Admin User", email: adminEmail, role: "admin" };
+            return { id: "1", name: "Admin User", email: adminEmail, role: "admin" } as User;
           } else {
             console.log('Admin login failed: Incorrect password for', email);
             return null; // Password doesn't match
@@ -71,8 +71,9 @@ export const authOptions: NextAuthOptions = {
     },
     // Use specific types for session callback
     async session({ session, token }: { session: Session, token: JWT }) {
+      // Add role to default session user type if it exists
       if (session?.user && token?.role) {
-        session.user.role = token.role;
+        (session.user as any).role = token.role; // Cast needed as default User type might not have role
       }
       return session;
     },
