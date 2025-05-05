@@ -28,7 +28,7 @@ export default function AdminPage() {
         </div>
         
         <div className="mt-6 text-gray-700 dark:text-gray-300">
-          <p className="mb-4">You&apos;ll be redirected to the main site in 5 seconds...</p>
+          <p className="mb-4">You'll be redirected to the main site in 5 seconds...</p>
           <div className="flex justify-center">
             <Link href="/newsite" className="bg-blue-600 text-white font-semibold px-6 py-3 rounded hover:bg-blue-700 transition duration-300">
               Go to Site Now
