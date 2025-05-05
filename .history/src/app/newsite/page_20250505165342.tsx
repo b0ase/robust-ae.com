@@ -37,19 +37,6 @@ export default function NewSitePage() {
   const [isSaving, setIsSaving] = useState(false);
   const [saveStatus, setSaveStatus] = useState<'success' | 'error' | null>(null);
   
-  // Hero carousel state
-  const [currentHeroImage, setCurrentHeroImage] = useState(0);
-  const heroImages = Array.from({length: 10}, (_, i) => `/hero/${(i + 1).toString().padStart(2, '0')}.jpg`);
-  
-  // Effect to rotate through hero images
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentHeroImage(prev => (prev + 1) % heroImages.length);
-    }, 5000); // Change image every 5 seconds
-    
-    return () => clearInterval(interval);
-  }, [heroImages.length]);
-  
   // Load content on initial page load
   useEffect(() => {
     // Check for authentication in sessionStorage
@@ -337,52 +324,14 @@ export default function NewSitePage() {
         {/* Hero Section - Editable when authenticated */}
         <section className="bg-b0ase-dark text-center py-12 px-4 md:py-20 md:px-6 border-b border-b0ase-card-border">
           <div className="container mx-auto">
-            {/* Hero Image Carousel */}
-            <div className="relative w-full h-64 md:h-96 mx-auto mb-8 overflow-hidden rounded">
-              {heroImages.map((image, idx) => (
-                <div
-                  key={image}
-                  className={`absolute inset-0 transition-opacity duration-1000 ${
-                    idx === currentHeroImage ? 'opacity-100' : 'opacity-0'
-                  }`}
-                >
-                  <Image
-                    src={image}
-                    alt={`Robust AE Hero Image ${idx + 1}`}
-                    fill
-                    className="object-cover"
-                    priority={idx === 0}
-                  />
-                </div>
-              ))}
-              
-              {/* Logo overlay on carousel */}
-              <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30">
-                <Image
-                  src="/images/logos/AE vector-2.png"
-                  alt="Robust AE Logo"
-                  width={240}
-                  height={80}
-                  className="z-10"
-                  priority
-                />
-              </div>
-              
-              {/* Navigation dots */}
-              <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
-                {heroImages.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentHeroImage(idx)}
-                    className={`w-2 h-2 rounded-full transition-colors ${
-                      idx === currentHeroImage ? 'bg-white' : 'bg-gray-400 bg-opacity-50'
-                    }`}
-                    aria-label={`Go to slide ${idx + 1}`}
-                  />
-                ))}
-              </div>
-            </div>
-            
+            <Image
+              src="/images/logos/AE vector-2.png"
+              alt="Robust AE Logo - Hero"
+              width={240}
+              height={80}
+              className="mx-auto mb-8"
+              priority
+            />
             {isAuthenticated ? (
               <div className="space-y-4 max-w-3xl mx-auto">
                 <div className="relative group">
