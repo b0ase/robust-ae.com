@@ -883,10 +883,10 @@ export default function AdminPage() {
         </section>
       </main>
       
-      <footer className="border-t border-b0ase-card-border mt-auto py-6 px-4 bg-black">
+      <footer className="border-t dark:border-gray-800 mt-auto py-6 px-4 bg-white dark:bg-gray-900">
         <div className="container mx-auto">
-          <p className="text-center text-gray-500 text-sm">
-            robust-ae.com Admin Panel &copy; {new Date().getFullYear()}
+          <p className="text-center text-gray-500 dark:text-gray-400 text-sm">
+            Robust AE Admin Panel &copy; {new Date().getFullYear()}
           </p>
         </div>
       </footer>
