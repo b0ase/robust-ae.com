@@ -113,8 +113,6 @@ export default function NewSitePage() {
 
     if (password === correctPassword) {
       setIsAuthenticated(true);
-      // Persist authentication so /admin page recognizes it
-      sessionStorage.setItem('isAdminAuthenticated', 'true');
       setIsAuthModalOpen(false);
     } else {
       setError('Invalid password.');
@@ -170,8 +168,6 @@ export default function NewSitePage() {
     setIsAuthenticated(false);
     setPassword('');
     setError(null);
-    // Remove authentication from sessionStorage
-    sessionStorage.removeItem('isAdminAuthenticated');
     // Reset editable content to the current displayed content
     setEditableContent(content);
   };
