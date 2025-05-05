@@ -587,117 +587,90 @@ export default function NewSitePage() {
           </div>
         </section>
 
-        {/* Contact Section - Editable when authenticated */}
-        <section id="contact" className="py-16 px-6 bg-black">
-          <div className="container mx-auto max-w-4xl">
-            <div className="flex items-center mb-12">
-              <div className="w-6 h-6 mr-4 relative">
-                <div className="absolute inset-0 bg-b0ase-blue opacity-20 rounded"></div>
-                <div className="absolute left-0 top-0 w-2 h-full bg-b0ase-blue rounded-l"></div>
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-white">Contact</h2>
-            </div>
-            
-            <div className="bg-b0ase-card p-8 rounded-lg border border-b0ase-card-border">
+        {/* Contact Section - Editable intro when authenticated */}
+        <section id="contact" className="py-16 px-6 bg-gray-100 dark:bg-gray-900">
+          <div className="container mx-auto max-w-6xl grid md:grid-cols-2 gap-12 items-start">
+            {/* Contact Info */}
+            <div>
               {isAuthenticated ? (
-                <div className="space-y-4">
-                  <div className="relative group">
+                <>
+                  <div className="relative group mb-4">
                     <input
                       type="text"
                       value={displayContent.contact.title}
                       onChange={(e) => handleContentChange('contact', 'title', e.target.value)}
-                      className="text-2xl font-bold w-full px-3 py-2 border-2 border-dashed border-transparent group-hover:border-b0ase-blue focus:border-b0ase-blue bg-transparent text-white focus:outline-none transition"
+                      className="text-3xl md:text-4xl font-bold w-full px-3 py-2 border-2 border-dashed border-transparent group-hover:border-blue-400 focus:border-blue-600 bg-transparent text-gray-900 dark:text-white focus:outline-none transition"
                     />
-                    <span className="absolute -top-4 left-0 bg-b0ase-blue bg-opacity-20 text-b0ase-blue text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
+                    <span className="absolute -top-4 left-0 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
                       Edit Title
                     </span>
                   </div>
-                  <div className="relative group">
+                  <div className="relative group mb-6">
                     <textarea
                       value={displayContent.contact.text}
                       onChange={(e) => handleContentChange('contact', 'text', e.target.value)}
                       rows={3}
-                      className="w-full px-3 py-2 border-2 border-dashed border-transparent group-hover:border-b0ase-blue focus:border-b0ase-blue bg-transparent text-gray-300 focus:outline-none transition resize-none"
+                      className="text-lg w-full px-3 py-2 border-2 border-dashed border-transparent group-hover:border-blue-400 focus:border-blue-600 bg-transparent text-gray-600 dark:text-gray-400 focus:outline-none transition resize-none"
                     />
-                    <span className="absolute -top-4 left-0 bg-b0ase-blue bg-opacity-20 text-b0ase-blue text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
-                      Edit Contact Text
+                    <span className="absolute -top-4 left-0 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
+                      Edit Text
                     </span>
                   </div>
-                </div>
+                </>
               ) : (
                 <>
-                  <h3 className="text-2xl font-bold mb-4 text-white">{displayContent.contact.title}</h3>
-                  <p className="text-gray-300 mb-6">
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+                    {displayContent.contact.title}
+                  </h2>
+                  <p className="text-lg text-gray-600 dark:text-gray-400 mb-6 whitespace-pre-line">
                     {displayContent.contact.text}
                   </p>
                 </>
               )}
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-                <div>
-                  <h4 className="text-xl font-semibold mb-4 text-b0ase-blue">Contact Details</h4>
-                  <div className="space-y-4">
-                    <div className="flex items-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-b0ase-blue mr-3 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a2 2 0 011.89 1.316l.834 2.503a2 2 0 01-.45 2.005l-1.562 1.562a16.06 16.06 0 006.586 6.586l1.562-1.562a2 2 0 012.005-.45l2.503.834A2 2 0 0119 17.72V21a2 2 0 01-2 2H5a2 2 0 01-2-2v-3.28z" />
-                      </svg>
-                      <div>
-                        <p className="text-gray-300">Phone</p>
-                        <a href="tel:07447544890" className="text-white hover:text-b0ase-blue transition-colors">07447 544 890</a>
-                      </div>
-                    </div>
-                    <div className="flex items-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-b0ase-blue mr-3 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
-                      <div>
-                        <p className="text-gray-300">Email</p>
-                        <a href="mailto:info@robust-ae.com" className="text-white hover:text-b0ase-blue transition-colors">info@robust-ae.com</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div>
-                  <h4 className="text-xl font-semibold mb-4 text-b0ase-blue">Send a Message</h4>
-                  <form className="space-y-4" id="feedback-form">
-                    <div>
-                      <input
-                        type="text"
-                        placeholder="Your Name"
-                        className="w-full px-4 py-2 bg-b0ase-dark border border-b0ase-card-border rounded focus:border-b0ase-blue focus:outline-none text-white"
-                        name="name"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <input
-                        type="email"
-                        placeholder="Your Email"
-                        className="w-full px-4 py-2 bg-b0ase-dark border border-b0ase-card-border rounded focus:border-b0ase-blue focus:outline-none text-white"
-                        name="email"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <textarea
-                        placeholder="Your Message"
-                        rows={4}
-                        className="w-full px-4 py-2 bg-b0ase-dark border border-b0ase-card-border rounded focus:border-b0ase-blue focus:outline-none text-white resize-none"
-                        name="message"
-                        required
-                      ></textarea>
-                    </div>
-                    <button
-                      type="submit"
-                      className="bg-b0ase-blue text-white px-6 py-2 rounded font-medium hover:bg-opacity-80 transition-colors"
-                    >
-                      Send Message
-                    </button>
-                  </form>
-                </div>
+              <div className="space-y-4 text-gray-700 dark:text-gray-300">
+                <p>
+                  <strong>George Haworth</strong>
+                </p>
+                <p>
+                  <strong>Email:</strong> <a href="mailto:info@robust-ae.com" className="text-blue-600 dark:text-blue-400 hover:underline">info@robust-ae.com</a>
+                </p>
+                <p>
+                  <strong>Tel:</strong> <a href="tel:07447544890" className="hover:underline">07447 544 890</a>
+                </p>
+                <p>
+                  <a
+                    href="/images/logos/George_Haworth_CV_23042025.pdf"
+                    download
+                    className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+                  >
+                    Download CV &rarr;
+                  </a>
+                </p>
               </div>
             </div>
+
+            {/* Contact Form (Frontend Structure Only - remains static) */}
+            <form className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md space-y-4">
+              <h3 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">Send a Message</h3>
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Your Name</label>
+                <input type="text" id="name" name="name" required className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" />
+              </div>
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Your Email Address</label>
+                <input type="email" id="email" name="email" required className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" />
+              </div>
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Leave us a message...</label>
+                <textarea id="message" name="message" rows={4} required className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"></textarea>
+              </div>
+              <div>
+                <button type="submit" className="w-full bg-blue-600 text-white font-semibold px-6 py-3 rounded hover:bg-blue-700 transition duration-300">
+                  Send Message
+                </button>
+              </div>
+              <p className="text-xs text-center text-gray-500 dark:text-gray-400">Note: Form submission is currently inactive.</p>
+            </form>
           </div>
         </section>
 
