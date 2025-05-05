@@ -203,39 +203,37 @@ export default function NewSitePage() {
       {/* Admin Toolbar - Only visible when authenticated */}
       {isAuthenticated && (
         <div className="fixed top-0 left-0 right-0 bg-gray-800 text-white z-50 py-3 px-4 shadow-md">
-          <div className="container mx-auto">
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
-              <div className="flex items-center space-x-3 mb-3 sm:mb-0">
-                <span className="font-medium">Admin Mode</span>
-                <div className="hidden sm:block text-sm text-gray-300">Make changes directly on the page</div>
-              </div>
-              <div className="flex flex-wrap items-center gap-2 sm:gap-4">
-                {saveStatus === 'success' && (
-                  <span className="text-green-400 text-xs sm:text-sm">Content saved successfully!</span>
-                )}
-                {saveStatus === 'error' && (
-                  <span className="text-red-400 text-xs sm:text-sm">Failed to save. Try again.</span>
-                )}
-                <Link
-                  href="/admin"
-                  className="bg-yellow-500 text-gray-900 px-3 py-1 rounded text-xs sm:text-sm hover:bg-yellow-600 transition"
-                >
-                  Admin Dashboard
-                </Link>
-                <button
-                  onClick={handleSaveContent}
-                  disabled={isSaving}
-                  className="bg-green-600 text-white px-3 py-1 rounded text-xs sm:text-sm hover:bg-green-700 transition disabled:opacity-50"
-                >
-                  {isSaving ? 'Saving...' : 'Save Changes'}
-                </button>
-                <button
-                  onClick={handleLogout}
-                  className="bg-red-600 text-white px-3 py-1 rounded text-xs sm:text-sm hover:bg-red-700 transition"
-                >
-                  Exit
-                </button>
-              </div>
+          <div className="container mx-auto flex justify-between items-center">
+            <div className="flex items-center space-x-3">
+              <span className="font-medium">Admin Mode</span>
+              <div className="text-sm text-gray-300">Make changes directly on the page</div>
+            </div>
+            <div className="flex items-center space-x-4">
+              {saveStatus === 'success' && (
+                <span className="text-green-400 text-sm">Content saved successfully!</span>
+              )}
+              {saveStatus === 'error' && (
+                <span className="text-red-400 text-sm">Failed to save. Try again.</span>
+              )}
+              <Link
+                href="/admin"
+                className="bg-yellow-500 text-gray-900 px-4 py-1 rounded text-sm hover:bg-yellow-600 transition"
+              >
+                Admin Dashboard
+              </Link>
+              <button
+                onClick={handleSaveContent}
+                disabled={isSaving}
+                className="bg-green-600 text-white px-4 py-1 rounded text-sm hover:bg-green-700 transition disabled:opacity-50"
+              >
+                {isSaving ? 'Saving...' : 'Save Changes'}
+              </button>
+              <button
+                onClick={handleLogout}
+                className="bg-red-600 text-white px-4 py-1 rounded text-sm hover:bg-red-700 transition"
+              >
+                Exit Admin Mode
+              </button>
             </div>
           </div>
         </div>
@@ -243,17 +241,17 @@ export default function NewSitePage() {
 
       {/* Admin Authentication Modal */}
       {isAuthModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
-          <div className="bg-b0ase-card p-6 md:p-8 rounded-lg border border-b0ase-card-border max-w-md w-full">
-            <h2 className="text-xl md:text-2xl font-bold mb-6 text-white">Admin Login</h2>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg max-w-md w-full">
+            <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Admin Login</h2>
             <form onSubmit={handleAuthenticate} className="space-y-4">
               {error && (
-                <div className="bg-red-900 bg-opacity-20 border border-red-600 text-red-400 px-4 py-3 rounded relative" role="alert">
+                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
                   <span className="block sm:inline">{error}</span>
                 </div>
               )}
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-1">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Password
                 </label>
                 <div className="relative">
@@ -262,7 +260,7 @@ export default function NewSitePage() {
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="bg-black border border-b0ase-card-border rounded w-full py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:border-b0ase-blue pr-10"
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 dark:text-white bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 mb-3 leading-tight focus:outline-none focus:shadow-outline pr-10"
                     required
                     placeholder="Enter admin password"
                   />
@@ -286,17 +284,17 @@ export default function NewSitePage() {
                   </button>
                 </div>
               </div>
-              <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-3 pt-4 space-y-3 space-y-reverse sm:space-y-0">
+              <div className="flex justify-end space-x-3 pt-4">
                 <button
                   type="button"
                   onClick={() => setIsAuthModalOpen(false)}
-                  className="px-4 py-2 border border-gray-600 rounded text-gray-300 hover:bg-gray-700 transition"
+                  className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="bg-b0ase-blue text-white font-semibold px-4 py-2 rounded hover:bg-opacity-80 transition mb-3 sm:mb-0"
+                  className="bg-blue-600 text-white font-semibold px-4 py-2 rounded hover:bg-blue-700 transition"
                 >
                   Login
                 </button>
@@ -590,17 +588,17 @@ export default function NewSitePage() {
         </section>
 
         {/* Contact Section - Editable when authenticated */}
-        <section id="contact" className="py-12 px-4 md:py-16 md:px-6 bg-black">
+        <section id="contact" className="py-16 px-6 bg-black">
           <div className="container mx-auto max-w-4xl">
-            <div className="flex items-center mb-8 md:mb-12">
+            <div className="flex items-center mb-12">
               <div className="w-6 h-6 mr-4 relative">
                 <div className="absolute inset-0 bg-b0ase-blue opacity-20 rounded"></div>
                 <div className="absolute left-0 top-0 w-2 h-full bg-b0ase-blue rounded-l"></div>
               </div>
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white">Contact</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">Contact</h2>
             </div>
             
-            <div className="bg-b0ase-card p-5 md:p-8 rounded-lg border border-b0ase-card-border">
+            <div className="bg-b0ase-card p-8 rounded-lg border border-b0ase-card-border">
               {isAuthenticated ? (
                 <div className="space-y-4">
                   <div className="relative group">
@@ -628,7 +626,7 @@ export default function NewSitePage() {
                 </div>
               ) : (
                 <>
-                  <h3 className="text-xl md:text-2xl font-bold mb-4 text-white">{displayContent.contact.title}</h3>
+                  <h3 className="text-2xl font-bold mb-4 text-white">{displayContent.contact.title}</h3>
                   <p className="text-gray-300 mb-6">
                     {displayContent.contact.text}
                   </p>
@@ -637,7 +635,7 @@ export default function NewSitePage() {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
                 <div>
-                  <h4 className="text-lg md:text-xl font-semibold mb-4 text-b0ase-blue">Contact Details</h4>
+                  <h4 className="text-xl font-semibold mb-4 text-b0ase-blue">Contact Details</h4>
                   <div className="space-y-4">
                     <div className="flex items-start">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-b0ase-blue mr-3 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -660,8 +658,8 @@ export default function NewSitePage() {
                   </div>
                 </div>
                 
-                <div className="mt-6 md:mt-0">
-                  <h4 className="text-lg md:text-xl font-semibold mb-4 text-b0ase-blue">Send a Message</h4>
+                <div>
+                  <h4 className="text-xl font-semibold mb-4 text-b0ase-blue">Send a Message</h4>
                   <form className="space-y-4" id="feedback-form">
                     <div>
                       <input

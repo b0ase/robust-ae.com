@@ -590,17 +590,17 @@ export default function NewSitePage() {
         </section>
 
         {/* Contact Section - Editable when authenticated */}
-        <section id="contact" className="py-12 px-4 md:py-16 md:px-6 bg-black">
+        <section id="contact" className="py-16 px-6 bg-black">
           <div className="container mx-auto max-w-4xl">
-            <div className="flex items-center mb-8 md:mb-12">
+            <div className="flex items-center mb-12">
               <div className="w-6 h-6 mr-4 relative">
                 <div className="absolute inset-0 bg-b0ase-blue opacity-20 rounded"></div>
                 <div className="absolute left-0 top-0 w-2 h-full bg-b0ase-blue rounded-l"></div>
               </div>
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white">Contact</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">Contact</h2>
             </div>
             
-            <div className="bg-b0ase-card p-5 md:p-8 rounded-lg border border-b0ase-card-border">
+            <div className="bg-b0ase-card p-8 rounded-lg border border-b0ase-card-border">
               {isAuthenticated ? (
                 <div className="space-y-4">
                   <div className="relative group">
@@ -628,7 +628,7 @@ export default function NewSitePage() {
                 </div>
               ) : (
                 <>
-                  <h3 className="text-xl md:text-2xl font-bold mb-4 text-white">{displayContent.contact.title}</h3>
+                  <h3 className="text-2xl font-bold mb-4 text-white">{displayContent.contact.title}</h3>
                   <p className="text-gray-300 mb-6">
                     {displayContent.contact.text}
                   </p>
@@ -637,7 +637,7 @@ export default function NewSitePage() {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
                 <div>
-                  <h4 className="text-lg md:text-xl font-semibold mb-4 text-b0ase-blue">Contact Details</h4>
+                  <h4 className="text-xl font-semibold mb-4 text-b0ase-blue">Contact Details</h4>
                   <div className="space-y-4">
                     <div className="flex items-start">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-b0ase-blue mr-3 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -660,8 +660,8 @@ export default function NewSitePage() {
                   </div>
                 </div>
                 
-                <div className="mt-6 md:mt-0">
-                  <h4 className="text-lg md:text-xl font-semibold mb-4 text-b0ase-blue">Send a Message</h4>
+                <div>
+                  <h4 className="text-xl font-semibold mb-4 text-b0ase-blue">Send a Message</h4>
                   <form className="space-y-4" id="feedback-form">
                     <div>
                       <input
