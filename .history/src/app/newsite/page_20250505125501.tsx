@@ -38,12 +38,6 @@ export default function NewSitePage() {
   
   // Load content on initial page load
   useEffect(() => {
-    // Check for authentication in sessionStorage
-    const storedAuth = sessionStorage.getItem('isAdminAuthenticated');
-    if (storedAuth === 'true') {
-      setIsAuthenticated(true);
-    }
-    
     fetchContent();
   }, []);
   
@@ -81,10 +75,6 @@ export default function NewSitePage() {
       }
       setContent(editableContent); // Update displayed content
       setSaveStatus('success');
-      
-      // Record the last edit time in localStorage
-      localStorage.setItem('lastContentEdit', new Date().toISOString());
-      
       // Hide success message after a delay
       setTimeout(() => setSaveStatus(null), 3000);
     } catch (err) {
