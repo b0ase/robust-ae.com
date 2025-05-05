@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { supabase } from '@/lib/supabaseClient';
 
 interface ContentData {
   hero: { title: string; subtitle: string };
@@ -20,12 +19,6 @@ interface ContentData {
     points: { title: string; text: string }[];
   };
   contact: { title: string; text: string };
-}
-
-interface DayFeedback {
-  day: number;
-  comment: string;
-  approved: boolean;
 }
 
 export default function AdminPage() {
@@ -45,16 +38,6 @@ export default function AdminPage() {
   });
   
   const [lastEdited, setLastEdited] = useState<string | null>(null);
-  
-  const [dayFeedback, setDayFeedback] = useState<DayFeedback[]>([
-    { day: 1, comment: '', approved: false },
-    { day: 2, comment: '', approved: false },
-    { day: 3, comment: '', approved: false },
-    { day: 4, comment: '', approved: false },
-    { day: 5, comment: '', approved: false },
-  ]);
-  const [isSavingFeedback, setIsSavingFeedback] = useState(false);
-  const [feedbackStatus, setFeedbackStatus] = useState<'success' | 'error' | null>(null);
   
   // Load authentication status from session storage
   useEffect(() => {
@@ -128,70 +111,6 @@ export default function AdminPage() {
     sessionStorage.setItem('isAdminAuthenticated', 'true');
     // Redirect to the site
     router.push('/newsite');
-  };
-  
-  useEffect(() => {
-    if (isAuthenticated) {
-      loadFeedback();
-    }
-  }, [isAuthenticated]);
-  
-  const loadFeedback = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('robust_ae_feedback')
-        .select('*')
-        .order('day');
-      
-      if (error) throw error;
-      
-      if (data && data.length > 0) {
-        setDayFeedback(data.map(item => ({
-          day: item.day,
-          comment: item.comment || '',
-          approved: item.approved || false
-        })));
-      }
-    } catch (error) {
-      console.error('Error loading feedback:', error);
-    }
-  };
-  
-  const handleFeedbackChange = (day: number, field: 'comment' | 'approved', value: string | boolean) => {
-    setDayFeedback(prev => 
-      prev.map(item => 
-        item.day === day ? { ...item, [field]: value } : item
-      )
-    );
-  };
-  
-  const saveFeedback = async (day: number) => {
-    setIsSavingFeedback(true);
-    setFeedbackStatus(null);
-    
-    try {
-      const feedbackItem = dayFeedback.find(item => item.day === day);
-      if (!feedbackItem) return;
-      
-      const { error } = await supabase
-        .from('robust_ae_feedback')
-        .upsert({ 
-          day,
-          comment: feedbackItem.comment,
-          approved: feedbackItem.approved,
-          updated_at: new Date()
-        });
-      
-      if (error) throw error;
-      
-      setFeedbackStatus('success');
-      setTimeout(() => setFeedbackStatus(null), 3000);
-    } catch (error) {
-      console.error('Error saving feedback:', error);
-      setFeedbackStatus('error');
-    } finally {
-      setIsSavingFeedback(false);
-    }
   };
   
   if (isLoading) {
@@ -401,68 +320,13 @@ export default function AdminPage() {
               </h3>
               <div className="ml-9 mt-2">
                 <ul className="list-disc list-outside space-y-1 text-gray-700 dark:text-gray-300 text-sm">
-                  <li className="flex items-start">
-                    <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Complete Supabase database setup with row-level security and data validation</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Migration of all content from static JSON to flexible database storage</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Implementation of content versioning system & rollback capability</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Admin API endpoints for secure content management</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Environment variable configuration across dev/staging/production</span>
-                  </li>
+                  <li>Complete Supabase database setup with row-level security and data validation</li>
+                  <li>Migration of all content from static JSON to flexible database storage</li>
+                  <li>Implementation of content versioning system & rollback capability</li>
+                  <li>Admin API endpoints for secure content management</li>
+                  <li>Environment variable configuration across dev/staging/production</li>
                 </ul>
                 <p className="text-sm text-gray-500 mt-1"><strong>Value:</strong> Enterprise-grade content infrastructure with version history and proper backup</p>
-                <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">Client Feedback</h4>
-                    <div className="flex items-center">
-                      <label className="inline-flex items-center mr-3 cursor-pointer">
-                        <input 
-                          type="checkbox" 
-                          className="form-checkbox h-4 w-4 text-green-600"
-                          checked={dayFeedback[0].approved}
-                          onChange={(e) => handleFeedbackChange(1, 'approved', e.target.checked)}
-                        />
-                        <span className="ml-2 text-xs text-gray-600 dark:text-gray-400">Approve</span>
-                      </label>
-                      <button
-                        onClick={() => saveFeedback(1)}
-                        disabled={isSavingFeedback}
-                        className="text-xs bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700 disabled:opacity-50"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </div>
-                  <textarea
-                    value={dayFeedback[0].comment}
-                    onChange={(e) => handleFeedbackChange(1, 'comment', e.target.value)}
-                    className="w-full px-3 py-2 text-sm bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Questions or comments about this feature set..."
-                    rows={2}
-                  ></textarea>
-                </div>
               </div>
             </div>
             
@@ -473,68 +337,13 @@ export default function AdminPage() {
               </h3>
               <div className="ml-9 mt-2">
                 <ul className="list-disc list-outside space-y-1 text-gray-700 dark:text-gray-300 text-sm">
-                  <li className="flex items-start">
-                    <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Integration with Google Analytics 4 for comprehensive traffic tracking</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Custom dashboard with key performance metrics (visitors, engagement, conversions)</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Heatmap visualization to understand user behavior & interactions</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Service popularity tracking to prioritize business offerings</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Geographic & device analytics to target marketing efforts</span>
-                  </li>
+                  <li>Integration with Google Analytics 4 for comprehensive traffic tracking</li>
+                  <li>Custom dashboard with key performance metrics (visitors, engagement, conversions)</li>
+                  <li>Heatmap visualization to understand user behavior & interactions</li>
+                  <li>Service popularity tracking to prioritize business offerings</li>
+                  <li>Geographic & device analytics to target marketing efforts</li>
                 </ul>
                 <p className="text-sm text-gray-500 mt-1"><strong>Value:</strong> Data-driven decision making for marketing and business development</p>
-                <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">Client Feedback</h4>
-                    <div className="flex items-center">
-                      <label className="inline-flex items-center mr-3 cursor-pointer">
-                        <input 
-                          type="checkbox" 
-                          className="form-checkbox h-4 w-4 text-green-600"
-                          checked={dayFeedback[1].approved}
-                          onChange={(e) => handleFeedbackChange(2, 'approved', e.target.checked)}
-                        />
-                        <span className="ml-2 text-xs text-gray-600 dark:text-gray-400">Approve</span>
-                      </label>
-                      <button
-                        onClick={() => saveFeedback(2)}
-                        disabled={isSavingFeedback}
-                        className="text-xs bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700 disabled:opacity-50"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </div>
-                  <textarea
-                    value={dayFeedback[1].comment}
-                    onChange={(e) => handleFeedbackChange(2, 'comment', e.target.value)}
-                    className="w-full px-3 py-2 text-sm bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Questions or comments about this feature set..."
-                    rows={2}
-                  ></textarea>
-                </div>
               </div>
             </div>
             
@@ -545,68 +354,13 @@ export default function AdminPage() {
               </h3>
               <div className="ml-9 mt-2">
                 <ul className="list-disc list-outside space-y-1 text-gray-700 dark:text-gray-300 text-sm">
-                  <li className="flex items-start">
-                    <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>AI testimonial generator with industry-specific engineering context</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Stability AI integration for custom project imagery & case study visuals</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Automated technical copywriting assistant for service descriptions</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Natural language form processing for improved client inquiries</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Admin interface for reviewing & publishing AI-generated content</span>
-                  </li>
+                  <li>AI testimonial generator with industry-specific engineering context</li>
+                  <li>DALL-E integration for custom project imagery & case study visuals</li>
+                  <li>Automated technical copywriting assistant for service descriptions</li>
+                  <li>Natural language form processing for improved client inquiries</li>
+                  <li>Admin interface for reviewing & publishing AI-generated content</li>
                 </ul>
                 <p className="text-sm text-gray-500 mt-1"><strong>Value:</strong> Cutting-edge AI capabilities to enhance content quality and social proof</p>
-                <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">Client Feedback</h4>
-                    <div className="flex items-center">
-                      <label className="inline-flex items-center mr-3 cursor-pointer">
-                        <input 
-                          type="checkbox" 
-                          className="form-checkbox h-4 w-4 text-green-600"
-                          checked={dayFeedback[2].approved}
-                          onChange={(e) => handleFeedbackChange(3, 'approved', e.target.checked)}
-                        />
-                        <span className="ml-2 text-xs text-gray-600 dark:text-gray-400">Approve</span>
-                      </label>
-                      <button
-                        onClick={() => saveFeedback(3)}
-                        disabled={isSavingFeedback}
-                        className="text-xs bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700 disabled:opacity-50"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </div>
-                  <textarea
-                    value={dayFeedback[2].comment}
-                    onChange={(e) => handleFeedbackChange(3, 'comment', e.target.value)}
-                    className="w-full px-3 py-2 text-sm bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Questions or comments about this feature set..."
-                    rows={2}
-                  ></textarea>
-                </div>
               </div>
             </div>
             
@@ -617,68 +371,13 @@ export default function AdminPage() {
               </h3>
               <div className="ml-9 mt-2">
                 <ul className="list-disc list-outside space-y-1 text-gray-700 dark:text-gray-300 text-sm">
-                  <li className="flex items-start">
-                    <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Admin dashboard polish with intuitive content management workflows</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Image optimization pipeline for faster page loading</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Responsive design refinements for perfect mobile experience</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Accessibility compliance (WCAG) for inclusive user experience</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Performance tuning for 90+ Lighthouse/PageSpeed scores</span>
-                  </li>
+                  <li>Admin dashboard polish with intuitive content management workflows</li>
+                  <li>Image optimization pipeline for faster page loading</li>
+                  <li>Responsive design refinements for perfect mobile experience</li>
+                  <li>Accessibility compliance (WCAG) for inclusive user experience</li>
+                  <li>Performance tuning for 90+ Lighthouse/PageSpeed scores</li>
                 </ul>
                 <p className="text-sm text-gray-500 mt-1"><strong>Value:</strong> Professional, high-performance website that makes exceptional first impressions</p>
-                <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">Client Feedback</h4>
-                    <div className="flex items-center">
-                      <label className="inline-flex items-center mr-3 cursor-pointer">
-                        <input 
-                          type="checkbox" 
-                          className="form-checkbox h-4 w-4 text-green-600"
-                          checked={dayFeedback[3].approved}
-                          onChange={(e) => handleFeedbackChange(4, 'approved', e.target.checked)}
-                        />
-                        <span className="ml-2 text-xs text-gray-600 dark:text-gray-400">Approve</span>
-                      </label>
-                      <button
-                        onClick={() => saveFeedback(4)}
-                        disabled={isSavingFeedback}
-                        className="text-xs bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700 disabled:opacity-50"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </div>
-                  <textarea
-                    value={dayFeedback[3].comment}
-                    onChange={(e) => handleFeedbackChange(4, 'comment', e.target.value)}
-                    className="w-full px-3 py-2 text-sm bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Questions or comments about this feature set..."
-                    rows={2}
-                  ></textarea>
-                </div>
               </div>
             </div>
             
@@ -689,68 +388,13 @@ export default function AdminPage() {
               </h3>
               <div className="ml-9 mt-2">
                 <ul className="list-disc list-outside space-y-1 text-gray-700 dark:text-gray-300 text-sm">
-                  <li className="flex items-start">
-                    <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>CI/CD pipeline configuration for automated testing & deployment</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Comprehensive admin documentation with video walkthroughs</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Security audit & implementation of best practices</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Environment setup for staging/production with proper variable isolation</span>
-                  </li>
-                  <li className="flex items-start">
-                    <svg className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>SEO optimization & structured data implementation</span>
-                  </li>
+                  <li>CI/CD pipeline configuration for automated testing & deployment</li>
+                  <li>Comprehensive admin documentation with video walkthroughs</li>
+                  <li>Security audit & implementation of best practices</li>
+                  <li>Environment setup for staging/production with proper variable isolation</li>
+                  <li>SEO optimization & structured data implementation</li>
                 </ul>
                 <p className="text-sm text-gray-500 mt-1"><strong>Value:</strong> Enterprise-grade deployment with proper documentation and security</p>
-                <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">Client Feedback</h4>
-                    <div className="flex items-center">
-                      <label className="inline-flex items-center mr-3 cursor-pointer">
-                        <input 
-                          type="checkbox" 
-                          className="form-checkbox h-4 w-4 text-green-600"
-                          checked={dayFeedback[4].approved}
-                          onChange={(e) => handleFeedbackChange(5, 'approved', e.target.checked)}
-                        />
-                        <span className="ml-2 text-xs text-gray-600 dark:text-gray-400">Approve</span>
-                      </label>
-                      <button
-                        onClick={() => saveFeedback(5)}
-                        disabled={isSavingFeedback}
-                        className="text-xs bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700 disabled:opacity-50"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </div>
-                  <textarea
-                    value={dayFeedback[4].comment}
-                    onChange={(e) => handleFeedbackChange(5, 'comment', e.target.value)}
-                    className="w-full px-3 py-2 text-sm bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Questions or comments about this feature set..."
-                    rows={2}
-                  ></textarea>
-                </div>
               </div>
             </div>
           </div>

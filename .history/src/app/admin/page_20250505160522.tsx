@@ -139,7 +139,7 @@ export default function AdminPage() {
   const loadFeedback = async () => {
     try {
       const { data, error } = await supabase
-        .from('robust_ae_feedback')
+        .from('project_feedback')
         .select('*')
         .order('day');
       
@@ -174,7 +174,7 @@ export default function AdminPage() {
       if (!feedbackItem) return;
       
       const { error } = await supabase
-        .from('robust_ae_feedback')
+        .from('project_feedback')
         .upsert({ 
           day,
           comment: feedbackItem.comment,
