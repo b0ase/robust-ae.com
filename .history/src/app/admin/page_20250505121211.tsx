@@ -132,7 +132,7 @@ export default function AdminPage() {
              // Check if the key exists and is a direct property (not an object or array)
              if (typeof newContent[section][key] === 'string') {
                  // Directly assign if the target is a string and value is a string
-                 (newContent[section] as Record<string, unknown>)[key as string] = value;
+                 (newContent[section] as any)[key] = value; // Keeping 'as any' here as TS struggles with dynamic keys
              } else {
                  console.warn(`Type mismatch or non-primitive type prevented update: section=${section}, field=${key}`);
              }

@@ -108,44 +108,32 @@ export default function AdminPage() {
   // Helper to handle changes in nested content state
   const handleContentChange = (
     section: keyof ContentData,
-    fieldOrItemKey: string,
+    field: string,
     value: string,
     index?: number,
-    subField?: string
+    pointIndex?: number
   ) => {
     setContent(prevContent => {
       if (!prevContent) return null;
+      // Deep copy to avoid direct state mutation
       const newContent = JSON.parse(JSON.stringify(prevContent)) as ContentData;
 
-      try {
-        if (section === 'services' && fieldOrItemKey === 'cards' && index !== undefined && subField && subField in newContent.services.cards[index]) {
-          type CardKey = keyof typeof newContent.services.cards[number];
-          newContent.services.cards[index][subField as CardKey] = value;
-        } else if (section === 'mission' && fieldOrItemKey === 'points' && index !== undefined && subField && subField in newContent.mission.points[index]) {
-          type PointKey = keyof typeof newContent.mission.points[number];
-          newContent.mission.points[index][subField as PointKey] = value;
-        } else if (section in newContent && fieldOrItemKey in newContent[section]){
-            type SectionType = typeof newContent[typeof section];
-            type SectionKey = keyof SectionType;
-            const key = fieldOrItemKey as SectionKey;
-
-             // Check if the key exists and is a direct property (not an object or array)
-             if (typeof newContent[section][key] === 'string') {
-                 // Directly assign if the target is a string and value is a string
-                 (newContent[section] as Record<string, unknown>)[key as string] = value;
-             } else {
-                 console.warn(`Type mismatch or non-primitive type prevented update: section=${section}, field=${key}`);
-             }
-        } else {
-            console.warn("handleContentChange: Unhandled or invalid update case", { section, fieldOrItemKey, index, subField });
-        }
-      } catch (error) {
-          console.error("Error updating content state:", error, { section, fieldOrItemKey, value, index, subField });
+      if (section === 'services' && field === 'card' && index !== undefined) {
+        (newContent.services.cards[index] as any)[value] = (event?.target as HTMLInputElement | HTMLTextAreaElement).value; // Assuming value is 'title' or 'description' here based on input name
+      } else if (section === 'mission' && field === 'point' && index !== undefined) {
+        (newContent.mission.points[index] as any)[value] = (event?.target as HTMLInputElement | HTMLTextAreaElement).value; // Assuming value is 'title' or 'text'
+      } else {
+        // Handle top-level sections like hero, contact or simple fields within services/mission
+         if (field in newContent[section]) {
+             (newContent[section] as any)[field] = value;
+         } else if (section === 'services' || section === 'mission') {
+             // Handle introTitle, introText, mainTitle, subTitle, introParagraph
+             (newContent[section] as any)[field] = value;
+         }
       }
-
       return newContent;
     });
-    setSaveStatus(null);
+    setSaveStatus(null); // Clear save status on any change
   };
 
 
@@ -243,7 +231,8 @@ export default function AdminPage() {
                      id={`serviceCardTitle-${index}`}
                      type="text"
                      value={card.title}
-                     onChange={(e) => handleContentChange('services', 'cards', e.target.value, index, 'title')}
+                     onChange={(e) => handleContentChange('services', 'cards', e.target.value, index, undefined)} // Hacky way to pass index and identify field
+                     name="title" // Identify field within card
                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                    />
                    <label htmlFor={`serviceCardDesc-${index}`} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Card {index + 1} Description</label>
@@ -251,7 +240,8 @@ export default function AdminPage() {
                      id={`serviceCardDesc-${index}`}
                      rows={3}
                      value={card.description}
-                     onChange={(e) => handleContentChange('services', 'cards', e.target.value, index, 'description')}
+                     onChange={(e) => handleContentChange('services', 'cards', e.target.value, index, undefined)} // Hacky way to pass index and identify field
+                     name="description" // Identify field within card
                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                    />
                  </div>
@@ -299,7 +289,8 @@ export default function AdminPage() {
                         id={`missionPointTitle-${index}`}
                         type="text"
                         value={point.title}
-                        onChange={(e) => handleContentChange('mission', 'points', e.target.value, index, 'title')}
+                        onChange={(e) => handleContentChange('mission', 'points', e.target.value, index, undefined)} // Hacky update
+                        name="title" // Identify field
                         className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                         />
                         <label htmlFor={`missionPointText-${index}`} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Point {index + 1} Text</label>
@@ -307,7 +298,8 @@ export default function AdminPage() {
                         id={`missionPointText-${index}`}
                         rows={3}
                         value={point.text}
-                        onChange={(e) => handleContentChange('mission', 'points', e.target.value, index, 'text')}
+                        onChange={(e) => handleContentChange('mission', 'points', e.target.value, index, undefined)} // Hacky update
+                        name="text" // Identify field
                         className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                         />
                     </div>

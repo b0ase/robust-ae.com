@@ -1,0 +1,52 @@
+{
+  "hero": {
+    "title": "Robust AE: Engineering Your Vision",
+    "subtitle": "End-to-end embedded systems development and industrial automation solutions.\nWe bring your ideas to life with expert engineering, from concept to production."
+  },
+  "services": {
+      "introTitle": "Our Services",
+      "introText": "Explore our core capabilities in embedded systems and industrial automation, designed to bring your projects from concept to reality.",
+      "cards": [
+        {
+            "title": "Embedded Systems Development",
+            "description": "From initial concept and microcontroller selection to firmware development and testing, we deliver robust and efficient embedded solutions tailored to your specific needs."
+        },
+        {
+            "title": "Industrial Automation",
+            "description": "Enhance your operational efficiency with custom automation solutions, including PLC programming, control system design, and system integration for industrial environments."
+        },
+        {
+            "title": "Prototyping & Production Support",
+            "description": "We bridge the gap from prototype to production, offering support with PCB design, small-batch manufacturing coordination, and design-for-manufacturability (DFM) guidance."
+        }
+      ]
+  },
+  "mission": {
+    "mainTitle": "Our Approach",
+    "subTitle": "Engineering Excellence, Practical Solutions",
+    "introParagraph": "Robust AE provides expert engineering services for businesses needing specialized support in embedded systems development and industrial automation. We focus on delivering professional, practical solutions from concept through to production.",
+    "points": [
+        {
+            "title": "Robust Design",
+            "text": "We engineer solutions built for reliability and performance. By focusing on robust design principles, thorough testing, and efficient implementation, we create systems that meet demanding requirements and provide long-term value."
+        },
+        {
+            "title": "Client-Focused Outputs",
+            "text": "We understand the constraints and goals of technical projects. Our process is structured to provide clear, useful deliverables at every stage, whether it's a functional prototype to secure investment, optimized firmware, or comprehensive system documentation. We tailor our work to achieve your specific objectives efficiently."
+        },
+        {
+            "title": "Deep Expertise",
+            "text": "Leveraging extensive hands-on experience across diverse platforms, communication protocols (like Modbus, Profinet), and control systems (including PLCs), we navigate complex technical challenges effectively. Our deep knowledge ensures we select the right technologies and avoid common pitfalls, accelerating your project's development."
+        },
+        {
+            "title": "Dedication & Partnership",
+            "text": "We are passionate about engineering and committed to the success of your project. We operate with transparency and integrate closely with your team, acting as a dedicated partner to overcome challenges and achieve your technical goals. Your success drives our enthusiasm."
+        }
+    ]
+  },
+  "contact": {
+      "title": "Get In Touch",
+      "text": "Reach out to discuss your project requirements or book a free consultation. Let's explore how Robust AE can help bring your ideas to life."
+  }
+  // Note: Testimonials, company info, specific contact details (email/tel/CV) are less suited for this simple JSON editing approach for now.
+} 

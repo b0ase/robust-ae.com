@@ -125,16 +125,12 @@ export default function AdminPage() {
           type PointKey = keyof typeof newContent.mission.points[number];
           newContent.mission.points[index][subField as PointKey] = value;
         } else if (section in newContent && fieldOrItemKey in newContent[section]){
-            type SectionType = typeof newContent[typeof section];
-            type SectionKey = keyof SectionType;
-            const key = fieldOrItemKey as SectionKey;
-
-             // Check if the key exists and is a direct property (not an object or array)
-             if (typeof newContent[section][key] === 'string') {
-                 // Directly assign if the target is a string and value is a string
-                 (newContent[section] as Record<string, unknown>)[key as string] = value;
+            type SectionKey = keyof typeof newContent[typeof section];
+             const targetField = newContent[section][fieldOrItemKey as SectionKey];
+             if(typeof targetField === typeof value) {
+                (newContent[section] as Record<string, any>)[fieldOrItemKey as SectionKey] = value;
              } else {
-                 console.warn(`Type mismatch or non-primitive type prevented update: section=${section}, field=${key}`);
+                 console.warn(`Type mismatch prevented update: section=${section}, field=${fieldOrItemKey}, expected=${typeof targetField}, got=${typeof value}`);
              }
         } else {
             console.warn("handleContentChange: Unhandled or invalid update case", { section, fieldOrItemKey, index, subField });

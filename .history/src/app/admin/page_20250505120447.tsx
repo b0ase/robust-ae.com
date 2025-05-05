@@ -108,44 +108,37 @@ export default function AdminPage() {
   // Helper to handle changes in nested content state
   const handleContentChange = (
     section: keyof ContentData,
-    fieldOrItemKey: string,
+    fieldOrItemKey: string, // e.g., 'title', 'subtitle', 'introText', 'cards', 'points'
     value: string,
-    index?: number,
-    subField?: string
+    index?: number, // Index for arrays like cards or points
+    subField?: string // 'title' or 'description' for cards, 'title' or 'text' for points
   ) => {
     setContent(prevContent => {
       if (!prevContent) return null;
+
+      // Deep copy to avoid direct state mutation
       const newContent = JSON.parse(JSON.stringify(prevContent)) as ContentData;
 
       try {
-        if (section === 'services' && fieldOrItemKey === 'cards' && index !== undefined && subField && subField in newContent.services.cards[index]) {
-          type CardKey = keyof typeof newContent.services.cards[number];
-          newContent.services.cards[index][subField as CardKey] = value;
-        } else if (section === 'mission' && fieldOrItemKey === 'points' && index !== undefined && subField && subField in newContent.mission.points[index]) {
-          type PointKey = keyof typeof newContent.mission.points[number];
-          newContent.mission.points[index][subField as PointKey] = value;
-        } else if (section in newContent && fieldOrItemKey in newContent[section]){
-            type SectionType = typeof newContent[typeof section];
-            type SectionKey = keyof SectionType;
-            const key = fieldOrItemKey as SectionKey;
-
-             // Check if the key exists and is a direct property (not an object or array)
-             if (typeof newContent[section][key] === 'string') {
-                 // Directly assign if the target is a string and value is a string
-                 (newContent[section] as Record<string, unknown>)[key as string] = value;
-             } else {
-                 console.warn(`Type mismatch or non-primitive type prevented update: section=${section}, field=${key}`);
-             }
-        } else {
-            console.warn("handleContentChange: Unhandled or invalid update case", { section, fieldOrItemKey, index, subField });
-        }
+          if (section === 'services' && fieldOrItemKey === 'cards' && index !== undefined && subField) {
+            // Update specific field within a service card
+            (newContent.services.cards[index] as any)[subField] = value;
+          } else if (section === 'mission' && fieldOrItemKey === 'points' && index !== undefined && subField) {
+            // Update specific field within a mission point
+            (newContent.mission.points[index] as any)[subField] = value;
+          } else if (section === 'services' || section === 'mission' || section === 'hero' || section === 'contact'){
+              // Update a direct field within a section (e.g., hero.title, services.introText)
+              (newContent[section] as any)[fieldOrItemKey] = value;
+          } else {
+              console.warn("handleContentChange: Unhandled case", { section, fieldOrItemKey, index, subField });
+          }
       } catch (error) {
           console.error("Error updating content state:", error, { section, fieldOrItemKey, value, index, subField });
       }
 
       return newContent;
     });
-    setSaveStatus(null);
+    setSaveStatus(null); // Clear save status on any change
   };
 
 
