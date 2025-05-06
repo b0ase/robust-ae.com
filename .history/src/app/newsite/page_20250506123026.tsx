@@ -190,12 +190,12 @@ export default function NewSitePage() {
         contentData.testimonials = {
           items: [
             {
-              quote: "Robust AE transformed our industrial control system. Their embedded expertise and dedication to quality delivered a solution that exceeded our expectations and revolutionized our manufacturing processes.",
+              quote: "Working with George was a pleasure! His embedded expertise and dedication to quality delivered a solution that exceeded our expectations for our industrial control system.",
               name: "Sarah Johnson",
               position: "CTO",
               company: "MaxTech Industries",
               initials: "SJ",
-              imageSrc: "/images/client-face-pics/sarah.jpg"
+              imageSrc: "/images/client-face-pics/face1.jpg"
             },
             {
               quote: "George did a great job leading the Robust AE team. His deep knowledge of both hardware and software development allowed them to solve problems other firms couldn't.",
@@ -203,7 +203,7 @@ export default function NewSitePage() {
               position: "Engineering Director",
               company: "Nexus Automation",
               initials: "MC",
-              imageSrc: "/images/client-face-pics/Michael.jpg"
+              imageSrc: "/images/client-face-pics/face2.jpg"
             },
             {
               quote: "Working with George and the Robust AE team on our IoT platform was a game-changer. Their technical expertise and reliable communication made the project seamless.",
@@ -211,15 +211,15 @@ export default function NewSitePage() {
               position: "Product Manager",
               company: "SmartSys Solutions",
               initials: "DR",
-              imageSrc: "/images/client-face-pics/david.jpg"
+              imageSrc: "/images/client-face-pics/face3.jpg"
             },
             {
-              quote: "George delivered our Nuclear Aeronautical Submarine Laser Guidance System on time and within budget. His ability to integrate quantum entanglement with hypersonic targeting algorithms while underwater was simply extraordinary.",
+              quote: "George delivered our aerospace control system on time and within budget. His attention to detail and rigorous testing approach ensured optimal performance.",
               name: "Emma Wilson",
               position: "Operations Director",
               company: "Altitude Systems",
               initials: "EW",
-              imageSrc: "/images/client-face-pics/emma.jpg"
+              imageSrc: "/images/client-face-pics/face4.jpg"
             }
           ],
           clients: [
