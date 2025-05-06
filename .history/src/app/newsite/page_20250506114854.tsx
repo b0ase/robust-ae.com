@@ -921,168 +921,18 @@ export default function NewSitePage() {
           </div>
         </section>
 
-        {/* Testimonials Section */}
+        {/* Testimonials Section (Placeholder - remains static) */}
         <section id="testimonials" className="py-16 px-6 bg-white dark:bg-black">
           <div className="container mx-auto max-w-4xl text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
               Client Testimonials
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-12">
-              What our clients say about our services and solutions
+            <p className="text-gray-600 dark:text-gray-400 mb-8">
+              (Testimonials will be added here soon)
             </p>
-            
-            {/* Testimonials Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Testimonial 1 */}
-              <div className="bg-gray-50 dark:bg-b0ase-card p-6 rounded-lg border border-gray-200 dark:border-b0ase-card-border relative">
-                <div className="absolute -top-4 left-6">
-                  <div className="bg-b0ase-blue text-white p-2 rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                    </svg>
-                  </div>
-                </div>
-                <div className="italic text-gray-700 dark:text-gray-300 mb-6">
-                  "Robust AE delivered an embedded system solution that exceeded our expectations. Their expertise in both hardware and software integration resulted in a reliable product that has significantly improved our manufacturing efficiency."
-                </div>
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-gray-300 dark:bg-gray-700 rounded-full mr-4 flex items-center justify-center text-gray-600 dark:text-gray-300 font-semibold">
-                    JM
-                  </div>
-                  <div className="text-left">
-                    <p className="font-medium text-gray-900 dark:text-white">James Mitchell</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Operations Director, TechManufacture Ltd</p>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Testimonial 2 */}
-              <div className="bg-gray-50 dark:bg-b0ase-card p-6 rounded-lg border border-gray-200 dark:border-b0ase-card-border relative">
-                <div className="absolute -top-4 left-6">
-                  <div className="bg-b0ase-blue text-white p-2 rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                    </svg>
-                  </div>
-                </div>
-                <div className="italic text-gray-700 dark:text-gray-300 mb-6">
-                  "The industrial automation solution provided by Robust AE transformed our production line. Their attention to detail during the planning phase and robust implementation has resulted in a 30% increase in our throughput with minimal downtime."
-                </div>
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-gray-300 dark:bg-gray-700 rounded-full mr-4 flex items-center justify-center text-gray-600 dark:text-gray-300 font-semibold">
-                    SK
-                  </div>
-                  <div className="text-left">
-                    <p className="font-medium text-gray-900 dark:text-white">Sarah Knowles</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">CTO, IndustrialPro Systems</p>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Testimonial 3 */}
-              <div className="bg-gray-50 dark:bg-b0ase-card p-6 rounded-lg border border-gray-200 dark:border-b0ase-card-border relative">
-                <div className="absolute -top-4 left-6">
-                  <div className="bg-b0ase-blue text-white p-2 rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                    </svg>
-                  </div>
-                </div>
-                <div className="italic text-gray-700 dark:text-gray-300 mb-6">
-                  "Working with Robust AE on our prototype development was a seamless experience. They quickly understood our requirements and delivered a working prototype that helped us secure additional funding. Their expertise across both hardware and software engineering is exceptional."
-                </div>
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-gray-300 dark:bg-gray-700 rounded-full mr-4 flex items-center justify-center text-gray-600 dark:text-gray-300 font-semibold">
-                    RB
-                  </div>
-                  <div className="text-left">
-                    <p className="font-medium text-gray-900 dark:text-white">Robert Bennett</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Founder, IoT Innovations</p>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Testimonial 4 */}
-              <div className="bg-gray-50 dark:bg-b0ase-card p-6 rounded-lg border border-gray-200 dark:border-b0ase-card-border relative">
-                <div className="absolute -top-4 left-6">
-                  <div className="bg-b0ase-blue text-white p-2 rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                    </svg>
-                  </div>
-                </div>
-                <div className="italic text-gray-700 dark:text-gray-300 mb-6">
-                  "The PCB design services provided by Robust AE were outstanding. Their team's attention to signal integrity and thermal considerations resulted in a design that passed compliance testing on the first attempt, saving us weeks in our product development cycle."
-                </div>
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-gray-300 dark:bg-gray-700 rounded-full mr-4 flex items-center justify-center text-gray-600 dark:text-gray-300 font-semibold">
-                    AL
-                  </div>
-                  <div className="text-left">
-                    <p className="font-medium text-gray-900 dark:text-white">Andrew Lewis</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Hardware Lead, Connectivity Solutions</p>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Testimonial 5 - Featured (Full width) */}
-              <div className="bg-gray-50 dark:bg-b0ase-card p-6 rounded-lg border border-gray-200 dark:border-b0ase-card-border relative md:col-span-2 max-w-xl mx-auto">
-                <div className="absolute -top-4 left-6">
-                  <div className="bg-b0ase-blue text-white p-2 rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                    </svg>
-                  </div>
-                </div>
-                <div className="italic text-gray-700 dark:text-gray-300 mb-6">
-                  "We've been working with Robust AE for over three years on our IoT product line. Their ongoing support and maintenance have been critical to our success. They're responsive, proactive in suggesting improvements, and have become an invaluable extension of our engineering team."
-                </div>
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-gray-300 dark:bg-gray-700 rounded-full mr-4 flex items-center justify-center text-gray-600 dark:text-gray-300 font-semibold">
-                    MP
-                  </div>
-                  <div className="text-left">
-                    <p className="font-medium text-gray-900 dark:text-white">Michelle Parker</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">CEO, Smart Home Innovations</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            {/* Client Logos Section */}
-            <div className="mt-20">
-              <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Trusted By</h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-10">
-                Companies we've collaborated with on successful projects
-              </p>
-              
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 place-items-center">
-                {/* Logo placeholders - Replace with actual client logos */}
-                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg w-32 h-20 flex items-center justify-center border border-gray-200 dark:border-gray-700">
-                  <div className="text-gray-400 font-medium text-sm text-center">IndustrialTech</div>
-                </div>
-                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg w-32 h-20 flex items-center justify-center border border-gray-200 dark:border-gray-700">
-                  <div className="text-gray-400 font-medium text-sm text-center">SmartSystems</div>
-                </div>
-                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg w-32 h-20 flex items-center justify-center border border-gray-200 dark:border-gray-700">
-                  <div className="text-gray-400 font-medium text-sm text-center">IoT Solutions</div>
-                </div>
-                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg w-32 h-20 flex items-center justify-center border border-gray-200 dark:border-gray-700">
-                  <div className="text-gray-400 font-medium text-sm text-center">AutomationPro</div>
-                </div>
-                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg w-32 h-20 flex items-center justify-center border border-gray-200 dark:border-gray-700">
-                  <div className="text-gray-400 font-medium text-sm text-center">MedTech Devices</div>
-                </div>
-                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg w-32 h-20 flex items-center justify-center border border-gray-200 dark:border-gray-700">
-                  <div className="text-gray-400 font-medium text-sm text-center">EnergySmart</div>
-                </div>
-                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg w-32 h-20 flex items-center justify-center border border-gray-200 dark:border-gray-700">
-                  <div className="text-gray-400 font-medium text-sm text-center">AgriTech</div>
-                </div>
-                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg w-32 h-20 flex items-center justify-center border border-gray-200 dark:border-gray-700">
-                  <div className="text-gray-400 font-medium text-sm text-center">SecuritySystems</div>
-                </div>
-              </div>
+            {/* Placeholder for testimonial content */}
+            <div className="italic text-gray-700 dark:text-gray-300">
+              &quot;Working with Robust AE was a seamless experience...&quot; - Placeholder Client
             </div>
           </div>
         </section>
