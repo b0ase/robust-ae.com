@@ -43,10 +43,7 @@ interface ContentData {
       initials: string;
       imageSrc?: string;
     }[];
-    clients: {
-      name: string;
-      logoSrc?: string;
-    }[];
+    clients: string[];
   };
   contact: { title: string; text: string };
 }
@@ -227,16 +224,16 @@ export default function NewSitePage() {
             }
           ],
           clients: [
-            { name: "MaxTech Industries", logoSrc: "" },
-            { name: "Nexus Automation", logoSrc: "" },
-            { name: "SmartSys Solutions", logoSrc: "" },
-            { name: "Altitude Systems", logoSrc: "" },
-            { name: "MediTech Innovations", logoSrc: "" },
-            { name: "Quantum Dynamics", logoSrc: "" },
-            { name: "CoreTech Systems", logoSrc: "" },
-            { name: "InnovateSys Group", logoSrc: "" },
-            { name: "TechnoVista Inc", logoSrc: "" },
-            { name: "FutureTech Labs", logoSrc: "" }
+            "MaxTech Industries", 
+            "Nexus Automation", 
+            "SmartSys Solutions", 
+            "Altitude Systems", 
+            "MediTech Innovations",
+            "GlobalConnect Networks",
+            "PrecisionTech Labs",
+            "Nova Dynamics",
+            "Quantum Electronics",
+            "FutureSystems Inc."
           ]
         };
       }
@@ -304,28 +301,47 @@ export default function NewSitePage() {
     }
   };
   
-  // Create a function to handle content changes
+  // Helper to handle changes in nested content state
   const handleContentChange = (
-    section: string, 
-    subSection: string, 
-    value: string | string[], 
-    index?: number, 
-    field?: string
+    section: keyof ContentData,
+    fieldOrItemKey: string,
+    value: string,
+    index?: number,
+    subField?: string
   ) => {
-    setEditableContent(prev => {
-      if (!prev) return null;
-      const newContent = JSON.parse(JSON.stringify(prev));
-      
-      if (index !== undefined && field) {
-        // Handle changes to array items with specific fields
-        newContent[section][subSection][index][field] = value;
-      } else {
-        // Handle changes to direct properties
-        newContent[section][subSection] = value;
+    setEditableContent(prevContent => {
+      if (!prevContent) return null;
+      const newContent = JSON.parse(JSON.stringify(prevContent)) as ContentData;
+
+      try {
+        if (section === 'services' && fieldOrItemKey === 'cards' && index !== undefined && subField && subField in newContent.services.cards[index]) {
+          type CardKey = keyof typeof newContent.services.cards[number];
+          newContent.services.cards[index][subField as CardKey] = value;
+        } else if (section === 'mission' && fieldOrItemKey === 'points' && index !== undefined && subField && subField in newContent.mission.points[index]) {
+          type PointKey = keyof typeof newContent.mission.points[number];
+          newContent.mission.points[index][subField as PointKey] = value;
+        } else if (section in newContent && fieldOrItemKey in newContent[section]){
+            type SectionType = typeof newContent[typeof section];
+            type SectionKey = keyof SectionType;
+            const key = fieldOrItemKey as SectionKey;
+
+             // Check if the key exists and is a direct property (not an object or array)
+             if (typeof newContent[section][key] === 'string') {
+                 // Directly assign if the target is a string and value is a string
+                 (newContent[section] as Record<string, unknown>)[key as string] = value;
+             } else {
+                 console.warn(`Type mismatch or non-primitive type prevented update: section=${section}, field=${key}`);
+             }
+        } else {
+            console.warn("handleContentChange: Unhandled or invalid update case", { section, fieldOrItemKey, index, subField });
+        }
+      } catch (error) {
+          console.error("Error updating content state:", error, { section, fieldOrItemKey, value, index, subField });
       }
-      
+
       return newContent;
     });
+    setSaveStatus(null);
   };
   
   // Logout handler
@@ -1076,14 +1092,8 @@ export default function NewSitePage() {
                               type="text"
                               value={project.technologies.join(', ')}
                               onChange={(e) => {
-                                const techsString = e.target.value;
-                                // Instead of directly passing the array, update the content state manually
-                                setEditableContent(prev => {
-                                  if (!prev) return null;
-                                  const newContent = JSON.parse(JSON.stringify(prev));
-                                  newContent.projects.items[index].technologies = techsString.split(',').map(tech => tech.trim()).filter(Boolean);
-                                  return newContent;
-                                });
+                                const techArray = e.target.value.split(',').map(tech => tech.trim()).filter(Boolean);
+                                handleContentChange('projects', 'items', techArray, index, 'technologies');
                               }}
                               className="w-full px-3 py-2 border-2 border text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 focus:border-b0ase-blue dark:focus:border-b0ase-blue bg-transparent focus:outline-none transition rounded"
                             />
@@ -1352,88 +1362,31 @@ export default function NewSitePage() {
             
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
               {isAuthenticated ? (
-                <>
-                  {displayContent.testimonials?.clients?.map((client, index) => (
-                    <div key={index} className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg w-auto min-w-40 h-24 flex flex-col items-center justify-center border border-gray-200 dark:border-gray-700">
-                      {client.logoSrc ? (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <img 
-                            src={client.logoSrc} 
-                            alt={client.name}
-                            className="max-w-full max-h-full object-contain"
-                          />
-                        </div>
-                      ) : (
-                        <div className="text-gray-700 dark:text-gray-200 font-medium text-sm text-center px-2 mb-2">
-                          {client.name}
-                        </div>
-                      )}
-                      
-                      <div className="w-full mt-2">
-                        <ImageUploader
-                          section="logos"
-                          currentImageUrl={client.logoSrc || ''}
-                          label=""
-                          onImageUploaded={(imageUrl) => {
-                            setEditableContent(prev => {
-                              if (!prev) return null;
-                              const newContent = JSON.parse(JSON.stringify(prev));
-                              newContent.testimonials.clients[index].logoSrc = imageUrl;
-                              return newContent;
-                            });
-                          }}
-                        />
-                        
-                        <input
-                          type="text"
-                          value={client.name}
-                          onChange={(e) => {
-                            setEditableContent(prev => {
-                              if (!prev) return null;
-                              const newContent = JSON.parse(JSON.stringify(prev));
-                              newContent.testimonials.clients[index].name = e.target.value;
-                              return newContent;
-                            });
-                          }}
-                          className="w-full px-2 py-1 text-sm mt-1 border border-gray-300 dark:border-gray-700 rounded bg-transparent text-gray-700 dark:text-gray-300"
-                          placeholder="Company Name"
-                        />
-                      </div>
-                    </div>
-                  ))}
-                  
-                  <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg w-auto min-w-40 h-24 flex items-center justify-center border border-gray-200 dark:border-gray-700 border-dashed">
-                    <button
-                      onClick={() => {
-                        setEditableContent(prev => {
-                          if (!prev) return null;
-                          const newContent = JSON.parse(JSON.stringify(prev));
-                          newContent.testimonials.clients.push({
-                            name: 'New Client',
-                            logoSrc: ''
-                          });
-                          return newContent;
-                        });
-                      }}
-                      className="text-b0ase-blue hover:text-b0ase-blue-dark"
-                    >
-                      + Add Client
-                    </button>
-                  </div>
-                </>
+                <div className="col-span-full w-full max-w-lg mx-auto">
+                  <label className="block text-gray-700 dark:text-gray-300 text-sm mb-2">
+                    Client Companies (comma-separated)
+                  </label>
+                  <textarea
+                    value={displayContent.testimonials?.clients?.join(', ')}
+                    onChange={(e) => {
+                      const clientsArray = e.target.value.split(',').map(client => client.trim()).filter(Boolean);
+                      setEditableContent(prev => {
+                        if (!prev) return null;
+                        const newContent = JSON.parse(JSON.stringify(prev));
+                        newContent.testimonials.clients = clientsArray;
+                        return newContent;
+                      });
+                    }}
+                    rows={3}
+                    className="w-full px-3 py-2 border-2 border text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 focus:border-base-blue dark:focus:border-base-blue bg-transparent focus:outline-none transition resize-none rounded"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">These will be displayed as logo placeholders.</p>
+                </div>
               ) : (
                 <>
                   {displayContent.testimonials?.clients?.map((client, index) => (
-                    <div key={index} className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg w-auto min-w-40 h-24 flex items-center justify-center border border-gray-200 dark:border-gray-700">
-                      {client.logoSrc ? (
-                        <img 
-                          src={client.logoSrc} 
-                          alt={client.name}
-                          className="max-w-full max-h-full object-contain"
-                        />
-                      ) : (
-                        <div className="text-gray-700 dark:text-gray-200 font-medium text-sm text-center px-2">{client.name}</div>
-                      )}
+                    <div key={index} className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg flex items-center justify-center border border-gray-200 dark:border-gray-700 aspect-video">
+                      <div className="text-gray-700 dark:text-gray-200 font-medium text-sm text-center px-2">{client}</div>
                     </div>
                   ))}
                 </>
