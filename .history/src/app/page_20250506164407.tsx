@@ -61,7 +61,7 @@ interface ContentData {
   contact: { title: string; text: string };
 }
 
-export default function NewSitePage() {
+export default function Home() {
   // Authentication states
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -1395,10 +1395,8 @@ export default function NewSitePage() {
                         </div>
                       )}
                       <div>
-                        <h4 className="font-medium text-gray-900 dark:text-white">{testimonial.name}</h4>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                          {testimonial.position}, {testimonial.company}
-                        </p>
+                        <h4 className="font-medium">{testimonial.name}</h4>
+                        <p className="text-sm text-gray-400">{testimonial.position}, {testimonial.company}</p>
                       </div>
                     </div>
                   </div>
@@ -1520,7 +1518,9 @@ export default function NewSitePage() {
                           className="w-full h-full object-cover p-1" // Changed to object-cover and added padding
                         />
                       ) : (
-                        <div className="text-gray-700 dark:text-gray-200 font-medium text-sm text-center px-2">{client.name}</div>
+                        <div className="text-gray-700 dark:text-gray-200 font-medium text-sm text-center px-2 mb-2">
+                          {client.name}
+                        </div>
                       )}
                     </div>
                   ))}
@@ -1650,7 +1650,7 @@ export default function NewSitePage() {
             <h2 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-white">
               Company &amp; Accreditations
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-8">
+            <p className="text-gray-600 dark:text-gray-400 mb-10">
               Company Number: 11269142
             </p>
             <div className="flex justify-center items-center gap-12 flex-wrap">
@@ -1682,4 +1682,4 @@ export default function NewSitePage() {
       </div>
     </>
   );
-} 
+}

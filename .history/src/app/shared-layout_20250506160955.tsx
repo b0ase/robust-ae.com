@@ -32,7 +32,7 @@ export default function SharedLayout({ children }: { children: React.ReactNode }
     event.preventDefault();
     setMobileMenuOpen(false); // Close mobile menu if open
 
-    const targetPath = '/';
+    const targetPath = '/newsite';
     const currentPath = window.location.pathname;
 
     const performScroll = (id: string) => {
@@ -67,14 +67,14 @@ export default function SharedLayout({ children }: { children: React.ReactNode }
       <header className="sticky top-0 z-50 bg-black border-b border-b0ase-card-border">
         <nav className="container mx-auto px-4 py-3 md:px-6 md:py-4 flex justify-between items-center">
           <div>
-            <Link href="/" className="text-xl md:text-2xl font-bold font-[var(--font-roboto-mono)] text-white hover:text-b0ase-blue transition-colors">
+            <Link href="/newsite" className="text-xl md:text-2xl font-bold font-[var(--font-roboto-mono)] text-white hover:text-b0ase-blue transition-colors">
               robust-ae.com
             </Link>
           </div>
           
           {/* Desktop Navigation - hidden on mobile */}
           <div className="hidden md:flex md:items-center md:space-x-8">
-            <Link href="/services" className="text-gray-300 hover:text-white cursor-pointer">Services</Link>
+            <a href="#services" onClick={(e) => scrollToSection('services', e)} className="text-gray-300 hover:text-white cursor-pointer">Services</a>
             <a href="#skills" onClick={(e) => scrollToSection('skills', e)} className="text-gray-300 hover:text-white cursor-pointer">Skills</a>
             <Link href="/projects" className="text-gray-300 hover:text-white cursor-pointer">Projects</Link>
             <a href="#contact" onClick={(e) => scrollToSection('contact', e)} className="text-gray-300 hover:text-white cursor-pointer">Contact</a>
@@ -147,13 +147,13 @@ export default function SharedLayout({ children }: { children: React.ReactNode }
         >
           <div className="container mx-auto px-4 py-4 space-y-4">
             <div className="space-y-3">
-              <Link 
-                href="/services" 
-                onClick={() => setMobileMenuOpen(false)}
+              <a 
+                href="#services" 
+                onClick={(e) => scrollToSection('services', e)}
                 className="block py-2 text-white hover:text-b0ase-blue cursor-pointer"
               >
                 Services
-              </Link>
+              </a>
               <a 
                 href="#skills" 
                 onClick={(e) => scrollToSection('skills', e)}
