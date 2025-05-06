@@ -220,20 +220,17 @@ export default function NewSitePage() {
               company: "Altitude Systems",
               initials: "EW",
               imageSrc: "/images/client-face-pics/face4.jpg"
+            },
+            {
+              quote: "From concept to deployment, Robust AE was the ideal partner for our medical device firmware. Their compliance expertise was invaluable.",
+              name: "James Taylor",
+              position: "R&D Lead",
+              company: "MediTech Innovations",
+              initials: "JT",
+              imageSrc: "/images/client-face-pics/face5.jpg"
             }
           ],
-          clients: [
-            "MaxTech Industries", 
-            "Nexus Automation", 
-            "SmartSys Solutions", 
-            "Altitude Systems", 
-            "MediTech Innovations",
-            "GlobalConnect Networks",
-            "PrecisionTech Labs",
-            "Nova Dynamics",
-            "Quantum Electronics",
-            "FutureSystems Inc."
-          ]
+          clients: ["MaxTech Industries", "Nexus Automation", "SmartSys Solutions", "Altitude Systems", "MediTech Innovations"]
         };
       }
       

@@ -220,20 +220,17 @@ export default function NewSitePage() {
               company: "Altitude Systems",
               initials: "EW",
               imageSrc: "/images/client-face-pics/face4.jpg"
+            },
+            {
+              quote: "From concept to deployment, Robust AE was the ideal partner for our medical device firmware. Their compliance expertise was invaluable.",
+              name: "James Taylor",
+              position: "R&D Lead",
+              company: "MediTech Innovations",
+              initials: "JT",
+              imageSrc: "/images/client-face-pics/face5.jpg"
             }
           ],
-          clients: [
-            "MaxTech Industries", 
-            "Nexus Automation", 
-            "SmartSys Solutions", 
-            "Altitude Systems", 
-            "MediTech Innovations",
-            "GlobalConnect Networks",
-            "PrecisionTech Labs",
-            "Nova Dynamics",
-            "Quantum Electronics",
-            "FutureSystems Inc."
-          ]
+          clients: ["TechCorp", "InnovateSys", "MaxTech", "SmartControl", "MediSoft"]
         };
       }
       
@@ -1168,14 +1165,14 @@ export default function NewSitePage() {
             {isAuthenticated ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {displayContent.testimonials?.items.map((testimonial, index) => (
-                  <div key={index} className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-6 rounded-lg">
+                  <div key={index} className="bg-gray-50 dark:bg-base-card border border-gray-200 dark:border-base-card-border p-6 rounded-lg">
                     <div className="space-y-4">
                       <div className="relative group">
                         <textarea
                           value={testimonial.quote}
                           onChange={(e) => handleContentChange('testimonials', 'items', e.target.value, index, 'quote')}
                           rows={4}
-                          className="w-full px-3 py-2 border-2 border text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-700 focus:border-b0ase-blue dark:focus:border-b0ase-blue bg-transparent focus:outline-none transition resize-none rounded"
+                          className="w-full px-3 py-2 border-2 border text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 focus:border-b0ase-blue dark:focus:border-b0ase-blue bg-transparent focus:outline-none transition resize-none rounded"
                         />
                         <span className="absolute -top-4 left-0 bg-b0ase-blue bg-opacity-20 text-b0ase-blue text-xs px-2 py-1 rounded">
                           Edit Quote
@@ -1259,35 +1256,12 @@ export default function NewSitePage() {
                     </div>
                   </div>
                 ))}
-
-                <div className="md:col-span-2 text-center mt-6">
-                  <button
-                    onClick={() => {
-                      setEditableContent(prev => {
-                        if (!prev) return null;
-                        const newContent = JSON.parse(JSON.stringify(prev));
-                        newContent.testimonials.items.push({
-                          quote: 'Add your testimonial quote here.',
-                          name: 'Client Name',
-                          position: 'Position',
-                          company: 'Company Name',
-                          initials: 'CN',
-                          imageSrc: '' // Add empty imageSrc
-                        });
-                        return newContent;
-                      });
-                    }}
-                    className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-4 py-2 text-gray-700 dark:text-base-blue hover:text-gray-900 dark:hover:text-white transition-colors"
-                  >
-                    + Add Testimonial
-                  </button>
-                </div>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {displayContent.testimonials?.items.map((testimonial, index) => (
-                  <div key={index} className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-6 rounded-lg flex flex-col">
-                    <p className="text-gray-800 dark:text-gray-200 mb-4">"{testimonial.quote}"</p>
+                  <div key={index} className="bg-gray-50 dark:bg-base-card border border-gray-200 dark:border-base-card-border p-6 rounded-lg flex flex-col">
+                    <p className="text-gray-700 dark:text-gray-300 mb-4">"{testimonial.quote}"</p>
                     <div className="mt-auto flex items-center">
                       {testimonial.imageSrc ? (
                         <div className="w-12 h-12 rounded-full overflow-hidden mr-4">
@@ -1299,61 +1273,20 @@ export default function NewSitePage() {
                         </div>
                       ) : (
                         <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center mr-4">
-                          <span className="text-gray-700 dark:text-gray-200 font-medium">
+                          <span className="text-gray-600 dark:text-gray-300 font-medium">
                             {testimonial.initials}
                           </span>
                         </div>
                       )}
                       <div>
                         <h4 className="font-medium text-gray-900 dark:text-white">{testimonial.name}</h4>
-                        <p className="text-sm text-gray-700 dark:text-gray-300">{testimonial.position}, {testimonial.company}</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">{testimonial.position}, {testimonial.company}</p>
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
             )}
-          </div>
-          
-          {/* Client Logos Section */}
-          <div className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Trusted By</h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-10">
-              Companies we've collaborated with on successful projects
-            </p>
-            
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-              {isAuthenticated ? (
-                <div className="col-span-full w-full max-w-lg mx-auto">
-                  <label className="block text-gray-700 dark:text-gray-300 text-sm mb-2">
-                    Client Companies (comma-separated)
-                  </label>
-                  <textarea
-                    value={displayContent.testimonials?.clients?.join(', ')}
-                    onChange={(e) => {
-                      const clientsArray = e.target.value.split(',').map(client => client.trim()).filter(Boolean);
-                      setEditableContent(prev => {
-                        if (!prev) return null;
-                        const newContent = JSON.parse(JSON.stringify(prev));
-                        newContent.testimonials.clients = clientsArray;
-                        return newContent;
-                      });
-                    }}
-                    rows={3}
-                    className="w-full px-3 py-2 border-2 border text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 focus:border-base-blue dark:focus:border-base-blue bg-transparent focus:outline-none transition resize-none rounded"
-                  />
-                  <p className="text-xs text-gray-500 mt-1">These will be displayed as logo placeholders.</p>
-                </div>
-              ) : (
-                <>
-                  {displayContent.testimonials?.clients?.map((client, index) => (
-                    <div key={index} className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg flex items-center justify-center border border-gray-200 dark:border-gray-700 aspect-video">
-                      <div className="text-gray-700 dark:text-gray-200 font-medium text-sm text-center px-2">{client}</div>
-                    </div>
-                  ))}
-                </>
-              )}
-            </div>
           </div>
         </section>
 

@@ -40,7 +40,6 @@ interface ContentData {
       position: string;
       company: string;
       initials: string;
-      imageSrc?: string;
     }[];
     clients: string[];
   };
@@ -111,134 +110,8 @@ export default function NewSitePage() {
         .eq('id', 1)
         .single();
       if (error) throw error;
-      
-      // Add default data for sections if they're missing
-      const contentData = data.data;
-      
-      // Add skills section if missing
-      if (!contentData.skills) {
-        contentData.skills = {
-          hardware: [
-            { name: 'Embedded Systems Design' },
-            { name: 'PCB Design & Layout' },
-            { name: 'Circuit Design' },
-            { name: 'Signal Integrity' },
-            { name: 'Prototyping' }
-          ],
-          software: [
-            { name: 'Embedded C/C++' },
-            { name: 'RTOS Implementation' },
-            { name: 'Python Scripting' },
-            { name: 'Firmware Development' },
-            { name: 'HMI & UI Development' }
-          ],
-          tools: [
-            { name: 'Eagle/KiCad/Altium' },
-            { name: 'CAD (SolidWorks, Fusion360)' },
-            { name: 'I2C, SPI, UART, CAN' },
-            { name: 'Git/Version Control' },
-            { name: 'Oscilloscopes & Logic Analyzers' }
-          ],
-          certifications: [
-            { 
-              title: 'BEng in Electrical & Electronic Engineering',
-              organization: 'University of Manchester',
-              id: '2015-2018'
-            },
-            {
-              title: 'NAPIT Certified Electrical Engineer',
-              organization: 'NAPIT',
-              id: '60482'
-            },
-            {
-              title: 'IET Member',
-              organization: 'IET',
-              id: '1100789092'
-            }
-          ]
-        };
-      }
-      
-      // Add projects section if missing
-      if (!contentData.projects) {
-        contentData.projects = {
-          items: [
-            {
-              title: 'Industrial Control System',
-              description: 'A comprehensive control system for manufacturing equipment, featuring real-time monitoring, predictive maintenance algorithms, and integration with existing factory systems.',
-              technologies: ['PLC', 'SCADA', 'HMI Design', 'ModBus'],
-              imageSrc: '/images/projects/Industrial_Control_System.jpg'
-            },
-            {
-              title: 'Smart Environmental Monitor',
-              description: 'A low-power IoT device for environmental monitoring in industrial settings. Features wireless connectivity, multiple sensor inputs, and cloud-based data analytics with alert capabilities.',
-              technologies: ['Custom PCB', 'ESP32', 'MQTT', 'Low Power Design'],
-              imageSrc: '/images/projects/Smart_Environmental_Monitor.jpg'
-            },
-            {
-              title: 'Precision Motor Controller',
-              description: 'A high-performance motor control system with closed-loop feedback. Features customizable PID parameters, torque and position control, and comprehensive safety features for industrial applications.',
-              technologies: ['STM32', 'FOC Algorithm', 'Real-time Control', 'CAN Interface'],
-              imageSrc: '/images/projects/Precision_Motor_Controller.jpg'
-            }
-          ]
-        };
-      }
-      
-      // Add testimonials section if missing
-      if (!contentData.testimonials) {
-        contentData.testimonials = {
-          items: [
-            {
-              quote: "Robust AE transformed our industrial control system. Their embedded expertise and dedication to quality delivered a solution that exceeded our expectations.",
-              name: "Sarah Johnson",
-              position: "CTO",
-              company: "MaxTech Industries",
-              initials: "SJ",
-              imageSrc: "/images/client-face-pics/face1.jpg"
-            },
-            {
-              quote: "The team's deep knowledge of both hardware and software development allowed them to solve problems other firms couldn't. Highly recommended.",
-              name: "Michael Chen",
-              position: "Engineering Director",
-              company: "Nexus Automation",
-              initials: "MC",
-              imageSrc: "/images/client-face-pics/face2.jpg"
-            },
-            {
-              quote: "Working with Robust AE on our IoT platform was a game-changer. Their technical expertise and reliable communication made the project seamless.",
-              name: "David Rodriguez",
-              position: "Product Manager",
-              company: "SmartSys Solutions",
-              initials: "DR",
-              imageSrc: "/images/client-face-pics/face3.jpg"
-            },
-            {
-              quote: "The Robust AE team delivered our aerospace control system on time and within budget. Their attention to detail and rigorous testing approach ensured optimal performance.",
-              name: "Emma Wilson",
-              position: "Operations Director",
-              company: "Altitude Systems",
-              initials: "EW",
-              imageSrc: "/images/client-face-pics/face4.jpg"
-            }
-          ],
-          clients: [
-            "MaxTech Industries", 
-            "Nexus Automation", 
-            "SmartSys Solutions", 
-            "Altitude Systems", 
-            "MediTech Innovations",
-            "GlobalConnect Networks",
-            "PrecisionTech Labs",
-            "Nova Dynamics",
-            "Quantum Electronics",
-            "FutureSystems Inc."
-          ]
-        };
-      }
-      
-      setContent(contentData);
-      setEditableContent(contentData);
+      setContent(data.data);
+      setEditableContent(data.data);
     } catch (error) {
       console.error("Error fetching content:", error);
     } finally {
@@ -805,219 +678,149 @@ export default function NewSitePage() {
               {/* Hardware Skills */}
               <div className="bg-b0ase-card p-5 md:p-6 rounded-lg border border-b0ase-card-border">
                 <h3 className="text-xl font-semibold mb-4 text-b0ase-blue">Hardware</h3>
-                {isAuthenticated ? (
-                  <div className="space-y-3 mb-4">
-                    {displayContent.skills?.hardware?.map((item, index) => (
-                      <div key={index} className="relative group">
-                        <input
-                          type="text"
-                          value={item.name}
-                          onChange={(e) => handleContentChange('skills', 'hardware', e.target.value, index, 'name')}
-                          className="w-full px-3 py-2 border-2 border-dashed border-transparent group-hover:border-b0ase-blue focus:border-b0ase-blue bg-transparent text-gray-300 focus:outline-none transition"
-                        />
-                        <span className="absolute -top-4 left-0 bg-b0ase-blue bg-opacity-20 text-b0ase-blue text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
-                          Edit Skill
-                        </span>
-                      </div>
-                    ))}
-                    <button
-                      onClick={() => {
-                        setEditableContent(prev => {
-                          if (!prev) return null;
-                          const newContent = JSON.parse(JSON.stringify(prev));
-                          newContent.skills.hardware.push({ name: 'New Hardware Skill' });
-                          return newContent;
-                        });
-                      }}
-                      className="text-sm text-b0ase-blue hover:text-white mt-2"
-                    >
-                      + Add Skill
-                    </button>
-                  </div>
-                ) : (
-                  <ul className="space-y-2 text-gray-300">
-                    {displayContent.skills?.hardware?.map((item, index) => (
-                      <li key={index} className="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-b0ase-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        {item.name}
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                <ul className="space-y-2 text-gray-300">
+                  <li className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-b0ase-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Embedded Systems Design
+                  </li>
+                  <li className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-b0ase-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    PCB Design & Layout
+                  </li>
+                  <li className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-b0ase-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Circuit Design
+                  </li>
+                  <li className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-b0ase-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Signal Integrity
+                  </li>
+                  <li className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-b0ase-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Prototyping
+                  </li>
+                </ul>
               </div>
               
               {/* Software Skills */}
               <div className="bg-b0ase-card p-5 md:p-6 rounded-lg border border-b0ase-card-border">
                 <h3 className="text-xl font-semibold mb-4 text-b0ase-blue">Software</h3>
-                {isAuthenticated ? (
-                  <div className="space-y-3 mb-4">
-                    {displayContent.skills?.software?.map((item, index) => (
-                      <div key={index} className="relative group">
-                        <input
-                          type="text"
-                          value={item.name}
-                          onChange={(e) => handleContentChange('skills', 'software', e.target.value, index, 'name')}
-                          className="w-full px-3 py-2 border-2 border-dashed border-transparent group-hover:border-b0ase-blue focus:border-b0ase-blue bg-transparent text-gray-300 focus:outline-none transition"
-                        />
-                        <span className="absolute -top-4 left-0 bg-b0ase-blue bg-opacity-20 text-b0ase-blue text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
-                          Edit Skill
-                        </span>
-                      </div>
-                    ))}
-                    <button
-                      onClick={() => {
-                        setEditableContent(prev => {
-                          if (!prev) return null;
-                          const newContent = JSON.parse(JSON.stringify(prev));
-                          newContent.skills.software.push({ name: 'New Software Skill' });
-                          return newContent;
-                        });
-                      }}
-                      className="text-sm text-b0ase-blue hover:text-white mt-2"
-                    >
-                      + Add Skill
-                    </button>
-                  </div>
-                ) : (
-                  <ul className="space-y-2 text-gray-300">
-                    {displayContent.skills?.software?.map((item, index) => (
-                      <li key={index} className="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-b0ase-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        {item.name}
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                <ul className="space-y-2 text-gray-300">
+                  <li className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-b0ase-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Embedded C/C++
+                  </li>
+                  <li className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-b0ase-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    RTOS Implementation
+                  </li>
+                  <li className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-b0ase-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Python Scripting
+                  </li>
+                  <li className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-b0ase-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Firmware Development
+                  </li>
+                  <li className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-b0ase-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    HMI & UI Development
+                  </li>
+                </ul>
               </div>
               
               {/* Tools Skills */}
               <div className="bg-b0ase-card p-5 md:p-6 rounded-lg border border-b0ase-card-border">
                 <h3 className="text-xl font-semibold mb-4 text-b0ase-blue">Tools & Protocols</h3>
-                {isAuthenticated ? (
-                  <div className="space-y-3 mb-4">
-                    {displayContent.skills?.tools?.map((item, index) => (
-                      <div key={index} className="relative group">
-                        <input
-                          type="text"
-                          value={item.name}
-                          onChange={(e) => handleContentChange('skills', 'tools', e.target.value, index, 'name')}
-                          className="w-full px-3 py-2 border-2 border-dashed border-transparent group-hover:border-b0ase-blue focus:border-b0ase-blue bg-transparent text-gray-300 focus:outline-none transition"
-                        />
-                        <span className="absolute -top-4 left-0 bg-b0ase-blue bg-opacity-20 text-b0ase-blue text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
-                          Edit Skill
-                        </span>
-                      </div>
-                    ))}
-                    <button
-                      onClick={() => {
-                        setEditableContent(prev => {
-                          if (!prev) return null;
-                          const newContent = JSON.parse(JSON.stringify(prev));
-                          newContent.skills.tools.push({ name: 'New Tool/Protocol' });
-                          return newContent;
-                        });
-                      }}
-                      className="text-sm text-b0ase-blue hover:text-white mt-2"
-                    >
-                      + Add Tool/Protocol
-                    </button>
-                  </div>
-                ) : (
-                  <ul className="space-y-2 text-gray-300">
-                    {displayContent.skills?.tools?.map((item, index) => (
-                      <li key={index} className="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-b0ase-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        {item.name}
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                <ul className="space-y-2 text-gray-300">
+                  <li className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-b0ase-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Eagle/KiCad/Altium
+                  </li>
+                  <li className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-b0ase-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    CAD (SolidWorks, Fusion360)
+                  </li>
+                  <li className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-b0ase-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    I2C, SPI, UART, CAN
+                  </li>
+                  <li className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-b0ase-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Git/Version Control
+                  </li>
+                  <li className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-b0ase-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Oscilloscopes & Logic Analyzers
+                  </li>
+                </ul>
               </div>
             </div>
             
             {/* Certifications */}
             <div className="mt-12 bg-b0ase-card p-5 md:p-6 rounded-lg border border-b0ase-card-border">
               <h3 className="text-xl font-semibold mb-4 text-b0ase-blue">Certifications & Education</h3>
-              {isAuthenticated ? (
-                <div className="space-y-6 mb-4">
-                  {displayContent.skills?.certifications?.map((cert, index) => (
-                    <div key={index} className="space-y-2 border-b border-gray-800 pb-4 last:border-0">
-                      <div className="relative group">
-                        <input
-                          type="text"
-                          value={cert.title}
-                          onChange={(e) => handleContentChange('skills', 'certifications', e.target.value, index, 'title')}
-                          className="w-full px-3 py-2 border-2 border-dashed border-transparent group-hover:border-b0ase-blue focus:border-b0ase-blue bg-transparent text-white font-medium focus:outline-none transition"
-                        />
-                        <span className="absolute -top-4 left-0 bg-b0ase-blue bg-opacity-20 text-b0ase-blue text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
-                          Edit Title
-                        </span>
-                      </div>
-                      <div className="relative group">
-                        <input
-                          type="text"
-                          value={cert.organization}
-                          onChange={(e) => handleContentChange('skills', 'certifications', e.target.value, index, 'organization')}
-                          className="w-full px-3 py-2 border-2 border-dashed border-transparent group-hover:border-b0ase-blue focus:border-b0ase-blue bg-transparent text-gray-400 text-sm focus:outline-none transition"
-                        />
-                        <span className="absolute -top-4 left-0 bg-b0ase-blue bg-opacity-20 text-b0ase-blue text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
-                          Edit Organization
-                        </span>
-                      </div>
-                      <div className="relative group">
-                        <input
-                          type="text"
-                          value={cert.id}
-                          onChange={(e) => handleContentChange('skills', 'certifications', e.target.value, index, 'id')}
-                          className="w-full px-3 py-2 border-2 border-dashed border-transparent group-hover:border-b0ase-blue focus:border-b0ase-blue bg-transparent text-gray-400 text-sm focus:outline-none transition"
-                        />
-                        <span className="absolute -top-4 left-0 bg-b0ase-blue bg-opacity-20 text-b0ase-blue text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
-                          Edit ID/Details
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                  <button
-                    onClick={() => {
-                      setEditableContent(prev => {
-                        if (!prev) return null;
-                        const newContent = JSON.parse(JSON.stringify(prev));
-                        newContent.skills.certifications.push({ 
-                          title: 'New Certification', 
-                          organization: 'Organization Name',
-                          id: 'ID/Year'
-                        });
-                        return newContent;
-                      });
-                    }}
-                    className="text-sm text-b0ase-blue hover:text-white mt-2"
-                  >
-                    + Add Certification
-                  </button>
-                </div>
-              ) : (
-                <ul className="space-y-4 text-gray-300">
-                  {displayContent.skills?.certifications?.map((cert, index) => (
-                    <li key={index} className="flex items-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 mt-0.5 text-b0ase-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path d="M12 14l9-5-9-5-9 5 9 5z" />
-                        <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
-                      </svg>
-                      <div>
-                        <h4 className="font-medium">{cert.title}</h4>
-                        <p className="text-sm text-gray-400">{cert.organization}, {cert.id}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              )}
+              <ul className="space-y-4 text-gray-300">
+                <li className="flex items-start">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 mt-0.5 text-b0ase-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                    <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+                  </svg>
+                  <div>
+                    <h4 className="font-medium">BEng in Electrical & Electronic Engineering</h4>
+                    <p className="text-sm text-gray-400">University of Manchester, 2015-2018</p>
+                  </div>
+                </li>
+                <li className="flex items-start">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 mt-0.5 text-b0ase-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                  </svg>
+                  <div>
+                    <h4 className="font-medium">NAPIT Certified Electrical Engineer</h4>
+                    <p className="text-sm text-gray-400">Membership: 60482</p>
+                  </div>
+                </li>
+                <li className="flex items-start">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 mt-0.5 text-b0ase-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                  </svg>
+                  <div>
+                    <h4 className="font-medium">IET Member</h4>
+                    <p className="text-sm text-gray-400">Membership: 1100789092</p>
+                  </div>
+                </li>
+              </ul>
             </div>
           </div>
         </section>
@@ -1034,122 +837,110 @@ export default function NewSitePage() {
             </div>
             
             <div className="space-y-12">
-              {displayContent.projects?.items?.map((project, index) => (
-                <div key={index} className="bg-b0ase-card p-5 md:p-6 rounded-lg border border-b0ase-card-border">
-                  <div className="flex flex-col lg:flex-row gap-6">
-                    <div className="lg:w-1/3">
-                      <div className="relative h-48 w-full rounded overflow-hidden bg-gray-800">
-                        <Image
-                          src={project.imageSrc || `/images/projects/placeholder.jpg`}
-                          alt={project.title}
-                          fill
-                          className="object-cover"
-                        />
-                        {isAuthenticated && (
-                          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                            <div className="text-center">
-                              <p className="text-white text-sm mb-2">Image: {project.imageSrc}</p>
-                              <span className="text-xs text-gray-300">
-                                Edit in source to change image path
-                              </span>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="lg:w-2/3">
-                      {isAuthenticated ? (
-                        <>
-                          <div className="relative group mb-3">
-                            <input
-                              type="text"
-                              value={project.title}
-                              onChange={(e) => handleContentChange('projects', 'items', e.target.value, index, 'title')}
-                              className="text-xl md:text-2xl font-semibold w-full px-3 py-2 border-2 border-dashed border-transparent group-hover:border-b0ase-blue focus:border-b0ase-blue bg-transparent text-white focus:outline-none transition"
-                            />
-                            <span className="absolute -top-4 left-0 bg-b0ase-blue bg-opacity-20 text-b0ase-blue text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
-                              Edit Title
-                            </span>
-                          </div>
-                          <div className="relative group mb-4">
-                            <textarea
-                              value={project.description}
-                              onChange={(e) => handleContentChange('projects', 'items', e.target.value, index, 'description')}
-                              rows={3}
-                              className="w-full px-3 py-2 border-2 border-dashed border-transparent group-hover:border-b0ase-blue focus:border-b0ase-blue bg-transparent text-gray-300 focus:outline-none transition resize-none"
-                            />
-                            <span className="absolute -top-4 left-0 bg-b0ase-blue bg-opacity-20 text-b0ase-blue text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
-                              Edit Description
-                            </span>
-                          </div>
-                          <div className="mb-4">
-                            <label className="block text-gray-400 text-xs mb-2">Technologies (comma-separated)</label>
-                            <div className="relative group">
-                              <input
-                                type="text"
-                                value={project.technologies.join(', ')}
-                                onChange={(e) => {
-                                  const techArray = e.target.value.split(',').map(tech => tech.trim()).filter(Boolean);
-                                  setEditableContent(prev => {
-                                    if (!prev) return null;
-                                    const newContent = JSON.parse(JSON.stringify(prev));
-                                    newContent.projects.items[index].technologies = techArray;
-                                    return newContent;
-                                  });
-                                }}
-                                className="w-full px-3 py-2 border-2 border-dashed border-transparent group-hover:border-b0ase-blue focus:border-b0ase-blue bg-transparent text-gray-300 focus:outline-none transition"
-                              />
-                            </div>
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          <h3 className="text-xl md:text-2xl font-semibold mb-3 text-white">{project.title}</h3>
-                          <p className="text-gray-300 mb-4">
-                            {project.description}
-                          </p>
-                          <div className="flex flex-wrap gap-2 mb-4">
-                            {project.technologies.map((tech, techIndex) => (
-                              <span key={techIndex} className="bg-b0ase-blue bg-opacity-20 text-b0ase-blue text-xs px-2 py-1 rounded">
-                                {tech}
-                              </span>
-                            ))}
-                          </div>
-                        </>
-                      )}
-                      <button className="text-b0ase-blue hover:text-white transition-colors font-medium inline-flex items-center text-sm md:text-base">
-                        View Project Details
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                        </svg>
-                      </button>
+              {/* Project 1 */}
+              <div className="bg-b0ase-card p-5 md:p-6 rounded-lg border border-b0ase-card-border">
+                <div className="flex flex-col lg:flex-row gap-6">
+                  <div className="lg:w-1/3">
+                    <div className="relative h-48 w-full rounded overflow-hidden bg-gray-800">
+                      <Image
+                        src="/images/projects/Industrial_Control_System.jpg"
+                        alt="Industrial Control System"
+                        fill
+                        className="object-cover"
+                      />
                     </div>
                   </div>
+                  <div className="lg:w-2/3">
+                    <h3 className="text-xl md:text-2xl font-semibold mb-3 text-white">Industrial Control System</h3>
+                    <p className="text-gray-300 mb-4">
+                      A comprehensive control system for manufacturing equipment, featuring real-time monitoring, 
+                      predictive maintenance algorithms, and integration with existing factory systems.
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      <span className="bg-b0ase-blue bg-opacity-20 text-b0ase-blue text-xs px-2 py-1 rounded">PLC</span>
+                      <span className="bg-b0ase-blue bg-opacity-20 text-b0ase-blue text-xs px-2 py-1 rounded">SCADA</span>
+                      <span className="bg-b0ase-blue bg-opacity-20 text-b0ase-blue text-xs px-2 py-1 rounded">HMI Design</span>
+                      <span className="bg-b0ase-blue bg-opacity-20 text-b0ase-blue text-xs px-2 py-1 rounded">ModBus</span>
+                    </div>
+                    <button className="text-b0ase-blue hover:text-white transition-colors font-medium inline-flex items-center text-sm md:text-base">
+                      View Project Details
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
-              ))}
+              </div>
               
-              {isAuthenticated && (
-                <div className="text-center mt-6">
-                  <button
-                    onClick={() => {
-                      setEditableContent(prev => {
-                        if (!prev) return null;
-                        const newContent = JSON.parse(JSON.stringify(prev));
-                        newContent.projects.items.push({
-                          title: 'New Project',
-                          description: 'Description of the new project goes here.',
-                          technologies: ['Tech1', 'Tech2', 'Tech3'],
-                          imageSrc: '/images/projects/placeholder.jpg'
-                        });
-                        return newContent;
-                      });
-                    }}
-                    className="bg-b0ase-card border border-b0ase-card-border px-4 py-2 text-b0ase-blue hover:text-white transition-colors"
-                  >
-                    + Add New Project
-                  </button>
+              {/* Project 2 */}
+              <div className="bg-b0ase-card p-5 md:p-6 rounded-lg border border-b0ase-card-border">
+                <div className="flex flex-col lg:flex-row gap-6">
+                  <div className="lg:w-1/3">
+                    <div className="relative h-48 w-full rounded overflow-hidden bg-gray-800">
+                      <Image
+                        src="/images/projects/Smart_Environmental_Monitor.jpg"
+                        alt="Smart Environmental Monitor"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  </div>
+                  <div className="lg:w-2/3">
+                    <h3 className="text-xl md:text-2xl font-semibold mb-3 text-white">Smart Environmental Monitor</h3>
+                    <p className="text-gray-300 mb-4">
+                      A low-power IoT device for environmental monitoring in industrial settings. Features wireless 
+                      connectivity, multiple sensor inputs, and cloud-based data analytics with alert capabilities.
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      <span className="bg-b0ase-blue bg-opacity-20 text-b0ase-blue text-xs px-2 py-1 rounded">Custom PCB</span>
+                      <span className="bg-b0ase-blue bg-opacity-20 text-b0ase-blue text-xs px-2 py-1 rounded">ESP32</span>
+                      <span className="bg-b0ase-blue bg-opacity-20 text-b0ase-blue text-xs px-2 py-1 rounded">MQTT</span>
+                      <span className="bg-b0ase-blue bg-opacity-20 text-b0ase-blue text-xs px-2 py-1 rounded">Low Power Design</span>
+                    </div>
+                    <button className="text-b0ase-blue hover:text-white transition-colors font-medium inline-flex items-center text-sm md:text-base">
+                      View Project Details
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
-              )}
+              </div>
+              
+              {/* Project 3 */}
+              <div className="bg-b0ase-card p-5 md:p-6 rounded-lg border border-b0ase-card-border">
+                <div className="flex flex-col lg:flex-row gap-6">
+                  <div className="lg:w-1/3">
+                    <div className="relative h-48 w-full rounded overflow-hidden bg-gray-800">
+                      <Image
+                        src="/images/projects/Precision_Motor_Controller.jpg"
+                        alt="Precision Motor Controller"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  </div>
+                  <div className="lg:w-2/3">
+                    <h3 className="text-xl md:text-2xl font-semibold mb-3 text-white">Precision Motor Controller</h3>
+                    <p className="text-gray-300 mb-4">
+                      A high-performance motor control system with closed-loop feedback. Features customizable PID parameters, 
+                      torque and position control, and comprehensive safety features for industrial applications.
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      <span className="bg-b0ase-blue bg-opacity-20 text-b0ase-blue text-xs px-2 py-1 rounded">STM32</span>
+                      <span className="bg-b0ase-blue bg-opacity-20 text-b0ase-blue text-xs px-2 py-1 rounded">FOC Algorithm</span>
+                      <span className="bg-b0ase-blue bg-opacity-20 text-b0ase-blue text-xs px-2 py-1 rounded">Real-time Control</span>
+                      <span className="bg-b0ase-blue bg-opacity-20 text-b0ase-blue text-xs px-2 py-1 rounded">CAN Interface</span>
+                    </div>
+                    <button className="text-b0ase-blue hover:text-white transition-colors font-medium inline-flex items-center text-sm md:text-base">
+                      View Project Details
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -1165,194 +956,157 @@ export default function NewSitePage() {
             </p>
             
             {/* Testimonials Cards */}
-            {isAuthenticated ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {displayContent.testimonials?.items.map((testimonial, index) => (
-                  <div key={index} className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-6 rounded-lg">
-                    <div className="space-y-4">
-                      <div className="relative group">
-                        <textarea
-                          value={testimonial.quote}
-                          onChange={(e) => handleContentChange('testimonials', 'items', e.target.value, index, 'quote')}
-                          rows={4}
-                          className="w-full px-3 py-2 border-2 border text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-700 focus:border-b0ase-blue dark:focus:border-b0ase-blue bg-transparent focus:outline-none transition resize-none rounded"
-                        />
-                        <span className="absolute -top-4 left-0 bg-b0ase-blue bg-opacity-20 text-b0ase-blue text-xs px-2 py-1 rounded">
-                          Edit Quote
-                        </span>
-                      </div>
-                      
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <label className="block text-gray-700 dark:text-gray-300 text-sm mb-1">
-                            Name
-                          </label>
-                          <input
-                            type="text"
-                            value={testimonial.name}
-                            onChange={(e) => handleContentChange('testimonials', 'items', e.target.value, index, 'name')}
-                            className="w-full px-3 py-2 border-2 border text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 focus:border-b0ase-blue dark:focus:border-b0ase-blue bg-transparent focus:outline-none transition rounded"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-gray-700 dark:text-gray-300 text-sm mb-1">
-                            Initials
-                          </label>
-                          <input
-                            type="text"
-                            value={testimonial.initials}
-                            onChange={(e) => handleContentChange('testimonials', 'items', e.target.value, index, 'initials')}
-                            className="w-full px-3 py-2 border-2 border text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 focus:border-b0ase-blue dark:focus:border-b0ase-blue bg-transparent focus:outline-none transition rounded"
-                            maxLength={2}
-                          />
-                        </div>
-                      </div>
-                      
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <label className="block text-gray-700 dark:text-gray-300 text-sm mb-1">
-                            Position
-                          </label>
-                          <input
-                            type="text"
-                            value={testimonial.position}
-                            onChange={(e) => handleContentChange('testimonials', 'items', e.target.value, index, 'position')}
-                            className="w-full px-3 py-2 border-2 border text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 focus:border-b0ase-blue dark:focus:border-b0ase-blue bg-transparent focus:outline-none transition rounded"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-gray-700 dark:text-gray-300 text-sm mb-1">
-                            Company
-                          </label>
-                          <input
-                            type="text"
-                            value={testimonial.company}
-                            onChange={(e) => handleContentChange('testimonials', 'items', e.target.value, index, 'company')}
-                            className="w-full px-3 py-2 border-2 border text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 focus:border-b0ase-blue dark:focus:border-b0ase-blue bg-transparent focus:outline-none transition rounded"
-                          />
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <label className="block text-gray-700 dark:text-gray-300 text-sm mb-1">
-                          Image Path
-                        </label>
-                        <div className="flex space-x-2">
-                          <input
-                            type="text"
-                            value={testimonial.imageSrc || ''}
-                            onChange={(e) => handleContentChange('testimonials', 'items', e.target.value, index, 'imageSrc')}
-                            className="flex-1 px-3 py-2 border-2 border text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 focus:border-b0ase-blue dark:focus:border-b0ase-blue bg-transparent focus:outline-none transition rounded"
-                            placeholder="/images/client-face-pics/face1.jpg"
-                          />
-                          {testimonial.imageSrc && (
-                            <div className="w-10 h-10 rounded-full overflow-hidden">
-                              <img 
-                                src={testimonial.imageSrc} 
-                                alt={testimonial.name}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Testimonial 1 */}
+              <div className="bg-gray-50 dark:bg-b0ase-card p-6 rounded-lg border border-gray-200 dark:border-b0ase-card-border relative">
+                <div className="absolute -top-4 left-6">
+                  <div className="bg-b0ase-blue text-white p-2 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                    </svg>
                   </div>
-                ))}
-
-                <div className="md:col-span-2 text-center mt-6">
-                  <button
-                    onClick={() => {
-                      setEditableContent(prev => {
-                        if (!prev) return null;
-                        const newContent = JSON.parse(JSON.stringify(prev));
-                        newContent.testimonials.items.push({
-                          quote: 'Add your testimonial quote here.',
-                          name: 'Client Name',
-                          position: 'Position',
-                          company: 'Company Name',
-                          initials: 'CN',
-                          imageSrc: '' // Add empty imageSrc
-                        });
-                        return newContent;
-                      });
-                    }}
-                    className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-4 py-2 text-gray-700 dark:text-base-blue hover:text-gray-900 dark:hover:text-white transition-colors"
-                  >
-                    + Add Testimonial
-                  </button>
+                </div>
+                <div className="italic text-gray-700 dark:text-gray-300 mb-6">
+                  "Robust AE delivered an embedded system solution that exceeded our expectations. Their expertise in both hardware and software integration resulted in a reliable product that has significantly improved our manufacturing efficiency."
+                </div>
+                <div className="flex items-center">
+                  <div className="w-10 h-10 bg-gray-300 dark:bg-gray-700 rounded-full mr-4 flex items-center justify-center text-gray-600 dark:text-gray-300 font-semibold">
+                    JM
+                  </div>
+                  <div className="text-left">
+                    <p className="font-medium text-gray-900 dark:text-white">James Mitchell</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Operations Director, TechManufacture Ltd</p>
+                  </div>
                 </div>
               </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {displayContent.testimonials?.items.map((testimonial, index) => (
-                  <div key={index} className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-6 rounded-lg flex flex-col">
-                    <p className="text-gray-800 dark:text-gray-200 mb-4">"{testimonial.quote}"</p>
-                    <div className="mt-auto flex items-center">
-                      {testimonial.imageSrc ? (
-                        <div className="w-12 h-12 rounded-full overflow-hidden mr-4">
-                          <img 
-                            src={testimonial.imageSrc} 
-                            alt={testimonial.name}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                      ) : (
-                        <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center mr-4">
-                          <span className="text-gray-700 dark:text-gray-200 font-medium">
-                            {testimonial.initials}
-                          </span>
-                        </div>
-                      )}
-                      <div>
-                        <h4 className="font-medium text-gray-900 dark:text-white">{testimonial.name}</h4>
-                        <p className="text-sm text-gray-700 dark:text-gray-300">{testimonial.position}, {testimonial.company}</p>
-                      </div>
-                    </div>
+              
+              {/* Testimonial 2 */}
+              <div className="bg-gray-50 dark:bg-b0ase-card p-6 rounded-lg border border-gray-200 dark:border-b0ase-card-border relative">
+                <div className="absolute -top-4 left-6">
+                  <div className="bg-b0ase-blue text-white p-2 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                    </svg>
                   </div>
-                ))}
+                </div>
+                <div className="italic text-gray-700 dark:text-gray-300 mb-6">
+                  "The industrial automation solution provided by Robust AE transformed our production line. Their attention to detail during the planning phase and robust implementation has resulted in a 30% increase in our throughput with minimal downtime."
+                </div>
+                <div className="flex items-center">
+                  <div className="w-10 h-10 bg-gray-300 dark:bg-gray-700 rounded-full mr-4 flex items-center justify-center text-gray-600 dark:text-gray-300 font-semibold">
+                    SK
+                  </div>
+                  <div className="text-left">
+                    <p className="font-medium text-gray-900 dark:text-white">Sarah Knowles</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">CTO, IndustrialPro Systems</p>
+                  </div>
+                </div>
               </div>
-            )}
-          </div>
-          
-          {/* Client Logos Section */}
-          <div className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Trusted By</h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-10">
-              Companies we've collaborated with on successful projects
-            </p>
+              
+              {/* Testimonial 3 */}
+              <div className="bg-gray-50 dark:bg-b0ase-card p-6 rounded-lg border border-gray-200 dark:border-b0ase-card-border relative">
+                <div className="absolute -top-4 left-6">
+                  <div className="bg-b0ase-blue text-white p-2 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                    </svg>
+                  </div>
+                </div>
+                <div className="italic text-gray-700 dark:text-gray-300 mb-6">
+                  "Working with Robust AE on our prototype development was a seamless experience. They quickly understood our requirements and delivered a working prototype that helped us secure additional funding. Their expertise across both hardware and software engineering is exceptional."
+                </div>
+                <div className="flex items-center">
+                  <div className="w-10 h-10 bg-gray-300 dark:bg-gray-700 rounded-full mr-4 flex items-center justify-center text-gray-600 dark:text-gray-300 font-semibold">
+                    RB
+                  </div>
+                  <div className="text-left">
+                    <p className="font-medium text-gray-900 dark:text-white">Robert Bennett</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Founder, IoT Innovations</p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Testimonial 4 */}
+              <div className="bg-gray-50 dark:bg-b0ase-card p-6 rounded-lg border border-gray-200 dark:border-b0ase-card-border relative">
+                <div className="absolute -top-4 left-6">
+                  <div className="bg-b0ase-blue text-white p-2 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                    </svg>
+                  </div>
+                </div>
+                <div className="italic text-gray-700 dark:text-gray-300 mb-6">
+                  "The PCB design services provided by Robust AE were outstanding. Their team's attention to signal integrity and thermal considerations resulted in a design that passed compliance testing on the first attempt, saving us weeks in our product development cycle."
+                </div>
+                <div className="flex items-center">
+                  <div className="w-10 h-10 bg-gray-300 dark:bg-gray-700 rounded-full mr-4 flex items-center justify-center text-gray-600 dark:text-gray-300 font-semibold">
+                    AL
+                  </div>
+                  <div className="text-left">
+                    <p className="font-medium text-gray-900 dark:text-white">Andrew Lewis</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Hardware Lead, Connectivity Solutions</p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Testimonial 5 - Featured (Full width) */}
+              <div className="bg-gray-50 dark:bg-b0ase-card p-6 rounded-lg border border-gray-200 dark:border-b0ase-card-border relative md:col-span-2 max-w-xl mx-auto">
+                <div className="absolute -top-4 left-6">
+                  <div className="bg-b0ase-blue text-white p-2 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                    </svg>
+                  </div>
+                </div>
+                <div className="italic text-gray-700 dark:text-gray-300 mb-6">
+                  "We've been working with Robust AE for over three years on our IoT product line. Their ongoing support and maintenance have been critical to our success. They're responsive, proactive in suggesting improvements, and have become an invaluable extension of our engineering team."
+                </div>
+                <div className="flex items-center">
+                  <div className="w-10 h-10 bg-gray-300 dark:bg-gray-700 rounded-full mr-4 flex items-center justify-center text-gray-600 dark:text-gray-300 font-semibold">
+                    MP
+                  </div>
+                  <div className="text-left">
+                    <p className="font-medium text-gray-900 dark:text-white">Michelle Parker</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">CEO, Smart Home Innovations</p>
+                  </div>
+                </div>
+              </div>
+            </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-              {isAuthenticated ? (
-                <div className="col-span-full w-full max-w-lg mx-auto">
-                  <label className="block text-gray-700 dark:text-gray-300 text-sm mb-2">
-                    Client Companies (comma-separated)
-                  </label>
-                  <textarea
-                    value={displayContent.testimonials?.clients?.join(', ')}
-                    onChange={(e) => {
-                      const clientsArray = e.target.value.split(',').map(client => client.trim()).filter(Boolean);
-                      setEditableContent(prev => {
-                        if (!prev) return null;
-                        const newContent = JSON.parse(JSON.stringify(prev));
-                        newContent.testimonials.clients = clientsArray;
-                        return newContent;
-                      });
-                    }}
-                    rows={3}
-                    className="w-full px-3 py-2 border-2 border text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 focus:border-base-blue dark:focus:border-base-blue bg-transparent focus:outline-none transition resize-none rounded"
-                  />
-                  <p className="text-xs text-gray-500 mt-1">These will be displayed as logo placeholders.</p>
+            {/* Client Logos Section */}
+            <div className="mt-20">
+              <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Trusted By</h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-10">
+                Companies we've collaborated with on successful projects
+              </p>
+              
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 place-items-center">
+                {/* Logo placeholders - Replace with actual client logos */}
+                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg w-32 h-20 flex items-center justify-center border border-gray-200 dark:border-gray-700">
+                  <div className="text-gray-400 font-medium text-sm text-center">IndustrialTech</div>
                 </div>
-              ) : (
-                <>
-                  {displayContent.testimonials?.clients?.map((client, index) => (
-                    <div key={index} className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg flex items-center justify-center border border-gray-200 dark:border-gray-700 aspect-video">
-                      <div className="text-gray-700 dark:text-gray-200 font-medium text-sm text-center px-2">{client}</div>
-                    </div>
-                  ))}
-                </>
-              )}
+                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg w-32 h-20 flex items-center justify-center border border-gray-200 dark:border-gray-700">
+                  <div className="text-gray-400 font-medium text-sm text-center">SmartSystems</div>
+                </div>
+                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg w-32 h-20 flex items-center justify-center border border-gray-200 dark:border-gray-700">
+                  <div className="text-gray-400 font-medium text-sm text-center">IoT Solutions</div>
+                </div>
+                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg w-32 h-20 flex items-center justify-center border border-gray-200 dark:border-gray-700">
+                  <div className="text-gray-400 font-medium text-sm text-center">AutomationPro</div>
+                </div>
+                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg w-32 h-20 flex items-center justify-center border border-gray-200 dark:border-gray-700">
+                  <div className="text-gray-400 font-medium text-sm text-center">MedTech Devices</div>
+                </div>
+                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg w-32 h-20 flex items-center justify-center border border-gray-200 dark:border-gray-700">
+                  <div className="text-gray-400 font-medium text-sm text-center">EnergySmart</div>
+                </div>
+                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg w-32 h-20 flex items-center justify-center border border-gray-200 dark:border-gray-700">
+                  <div className="text-gray-400 font-medium text-sm text-center">AgriTech</div>
+                </div>
+                <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg w-32 h-20 flex items-center justify-center border border-gray-200 dark:border-gray-700">
+                  <div className="text-gray-400 font-medium text-sm text-center">SecuritySystems</div>
+                </div>
+              </div>
             </div>
           </div>
         </section>

@@ -220,20 +220,17 @@ export default function NewSitePage() {
               company: "Altitude Systems",
               initials: "EW",
               imageSrc: "/images/client-face-pics/face4.jpg"
+            },
+            {
+              quote: "From concept to deployment, Robust AE was the ideal partner for our medical device firmware. Their compliance expertise was invaluable.",
+              name: "James Taylor",
+              position: "R&D Lead",
+              company: "MediTech Innovations",
+              initials: "JT",
+              imageSrc: "/images/client-face-pics/face5.jpg"
             }
           ],
-          clients: [
-            "MaxTech Industries", 
-            "Nexus Automation", 
-            "SmartSys Solutions", 
-            "Altitude Systems", 
-            "MediTech Innovations",
-            "GlobalConnect Networks",
-            "PrecisionTech Labs",
-            "Nova Dynamics",
-            "Quantum Electronics",
-            "FutureSystems Inc."
-          ]
+          clients: ["TechCorp", "InnovateSys", "MaxTech", "SmartControl", "MediSoft"]
         };
       }
       
@@ -1316,15 +1313,15 @@ export default function NewSitePage() {
           </div>
           
           {/* Client Logos Section */}
-          <div className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mt-20">
             <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Trusted By</h3>
             <p className="text-gray-600 dark:text-gray-400 mb-10">
               Companies we've collaborated with on successful projects
             </p>
             
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 place-items-center">
               {isAuthenticated ? (
-                <div className="col-span-full w-full max-w-lg mx-auto">
+                <div className="md:col-span-4 w-full max-w-lg mx-auto">
                   <label className="block text-gray-700 dark:text-gray-300 text-sm mb-2">
                     Client Companies (comma-separated)
                   </label>
@@ -1347,8 +1344,8 @@ export default function NewSitePage() {
               ) : (
                 <>
                   {displayContent.testimonials?.clients?.map((client, index) => (
-                    <div key={index} className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg flex items-center justify-center border border-gray-200 dark:border-gray-700 aspect-video">
-                      <div className="text-gray-700 dark:text-gray-200 font-medium text-sm text-center px-2">{client}</div>
+                    <div key={index} className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg w-32 h-20 flex items-center justify-center border border-gray-200 dark:border-gray-700">
+                      <div className="text-gray-700 dark:text-gray-200 font-medium text-sm text-center">{client}</div>
                     </div>
                   ))}
                 </>
