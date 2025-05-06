@@ -32,16 +32,6 @@ interface ContentData {
       description: string;
       technologies: string[];
       imageSrc: string;
-      challenge: string;
-      solution: string;
-      results: string;
-      additionalImages: { src: string; alt: string }[];
-      testimonial: {
-        quote: string;
-        name: string;
-        position: string;
-        company: string;
-      };
     }[];
   };
   testimonials: {
@@ -181,58 +171,19 @@ export default function NewSitePage() {
               title: 'Industrial Control System',
               description: 'A comprehensive control system for manufacturing equipment, featuring real-time monitoring, predictive maintenance algorithms, and integration with existing factory systems.',
               technologies: ['PLC', 'SCADA', 'HMI Design', 'ModBus'],
-              imageSrc: '/images/projects/Industrial_Control_System.jpg',
-              challenge: "The primary challenge was to integrate a legacy manufacturing line with modern IoT capabilities for real-time data acquisition and predictive maintenance without significant downtime.",
-              solution: "We developed a custom PLC program and SCADA interface, coupled with edge computing devices to gather sensor data. This data was then streamed to a cloud platform for analysis and dashboarding.",
-              results: "Achieved a 15% reduction in unplanned downtime and a 10% increase in overall equipment effectiveness (OEE) within the first six months.",
-              additionalImages: [
-                { src: "/images/projects/industrial-detail-1.jpg", alt: "ICS Detail 1" },
-                { src: "/images/projects/industrial-detail-2.jpg", alt: "ICS Detail 2" }
-              ],
-              testimonial: {
-                quote: "Robust AE's solution for our control system has been a game-changer. The insights we get now are invaluable.",
-                name: "John Doe",
-                position: "Plant Manager",
-                company: "Manufacturing Co."
-              }
+              imageSrc: '/images/projects/Industrial_Control_System.jpg'
             },
             {
               title: 'Smart Environmental Monitor',
               description: 'A low-power IoT device for environmental monitoring in industrial settings. Features wireless connectivity, multiple sensor inputs, and cloud-based data analytics with alert capabilities.',
               technologies: ['Custom PCB', 'ESP32', 'MQTT', 'Low Power Design'],
-              imageSrc: '/images/projects/Smart_Environmental_Monitor.jpg',
-              challenge: "Designing a device that could operate for extended periods on battery power in harsh industrial environments while reliably transmitting data from multiple sensors.",
-              solution: "A custom-designed PCB with an ESP32 microcontroller, optimized for low-power consumption. Firmware was developed to manage sensor readings, data transmission via MQTT, and sleep cycles effectively.",
-              results: "The device achieved over 12 months of battery life on a single charge while providing critical environmental data, leading to improved safety and regulatory compliance.",
-              additionalImages: [
-                { src: "/images/projects/env-monitor-detail-1.jpg", alt: "Env Monitor Detail 1" },
-                { src: "/images/projects/env-monitor-detail-2.jpg", alt: "Env Monitor Detail 2" }
-              ],
-              testimonial: {
-                quote: "The smart environmental monitors from Robust AE have significantly improved our ability to track conditions in remote locations.",
-                name: "Jane Smith",
-                position: "Compliance Officer",
-                company: "EcoLogistics Ltd."
-              }
+              imageSrc: '/images/projects/Smart_Environmental_Monitor.jpg'
             },
             {
               title: 'Precision Motor Controller',
               description: 'A high-performance motor control system with closed-loop feedback. Features customizable PID parameters, torque and position control, and comprehensive safety features for industrial applications.',
               technologies: ['STM32', 'FOC Algorithm', 'Real-time Control', 'CAN Interface'],
-              imageSrc: '/images/projects/Precision_Motor_Controller.jpg',
-              challenge: "Achieving sub-millisecond response times for motor control adjustments and ensuring high precision in a noisy industrial environment with fluctuating loads.",
-              solution: "An STM32-based controller implementing a Field-Oriented Control (FOC) algorithm. Advanced filtering and a robust CAN interface were used for reliable communication and control.",
-              results: "The controller delivered a 30% improvement in positioning accuracy and a 50% reduction in motor vibration, enhancing product quality in the client's automated assembly line.",
-              additionalImages: [
-                { src: "/images/projects/motor-controller-detail-1.jpg", alt: "Motor Controller Detail 1" },
-                { src: "/images/projects/motor-controller-detail-2.jpg", alt: "Motor Controller Detail 2" }
-              ],
-              testimonial: {
-                quote: "The precision motor controller developed by Robust AE is the most stable and responsive we've ever used.",
-                name: "Alex Chan",
-                position: "Lead Robotics Engineer",
-                company: "Automata Inc."
-              }
+              imageSrc: '/images/projects/Precision_Motor_Controller.jpg'
             }
           ]
         };
@@ -276,48 +227,18 @@ export default function NewSitePage() {
             }
           ],
           clients: [
-            { name: "Altitude Systems", logoSrc: "/images/client-logos/AltitudeSystems.png" },
-            { name: "CoreTech Solutions", logoSrc: "/images/client-logos/CoreTechSolutions.png" },
-            { name: "FutureTech Labs", logoSrc: "/images/client-logos/FutureTechLabs.png" },
-            { name: "InnovateSys Group", logoSrc: "/images/client-logos/InnovateSysGroup.png" },
-            { name: "MaxTech Industries", logoSrc: "/images/client-logos/maxtech.png" },
-            { name: "MediTech Innovations", logoSrc: "/images/client-logos/MediTechInnovations.png" },
-            { name: "Nexus Automation", logoSrc: "/images/client-logos/nexusautomation.png" },
-            { name: "Quantum Dynamics", logoSrc: "/images/client-logos/QuantumDynamics.png" },
-            { name: "SmartSys Solutions", logoSrc: "/images/client-logos/SmartSysSolutions.png" },
-            { name: "TechnoVista Inc", logoSrc: "/images/client-logos/TechnoVsitaInc.png" }
+            { name: "MaxTech Industries", logoSrc: "" },
+            { name: "Nexus Automation", logoSrc: "" },
+            { name: "SmartSys Solutions", logoSrc: "" },
+            { name: "Altitude Systems", logoSrc: "" },
+            { name: "MediTech Innovations", logoSrc: "" },
+            { name: "Quantum Dynamics", logoSrc: "" },
+            { name: "CoreTech Systems", logoSrc: "" },
+            { name: "InnovateSys Group", logoSrc: "" },
+            { name: "TechnoVista Inc", logoSrc: "" },
+            { name: "FutureTech Labs", logoSrc: "" }
           ]
         };
-      } else {
-        // ENSURE EXISTING CLIENTS DATA HAS LOGOS
-        // If testimonials exist, ensure clients array exists and populate logoSrc
-        if (!contentData.testimonials.clients) {
-            contentData.testimonials.clients = []; // Initialize if missing
-        }
-        
-        const clientLogoMap = {
-          "Altitude Systems": "/images/client-logos/AltitudeSystems.png",
-          "CoreTech Solutions": "/images/client-logos/CoreTechSolutions.png",
-          "FutureTech Labs": "/images/client-logos/FutureTechLabs.png",
-          "InnovateSys Group": "/images/client-logos/InnovateSysGroup.png",
-          "MaxTech Industries": "/images/client-logos/maxtech.png",
-          "MediTech Innovations": "/images/client-logos/MediTechInnovations.png",
-          "Nexus Automation": "/images/client-logos/nexusautomation.png",
-          "Quantum Dynamics": "/images/client-logos/QuantumDynamics.png",
-          "SmartSys Solutions": "/images/client-logos/SmartSysSolutions.png",
-          "TechnoVista Inc": "/images/client-logos/TechnoVsitaInc.png" 
-        };
-        
-        // Add or update existing clients with their logoSrc
-        contentData.testimonials.clients = Object.entries(clientLogoMap).map(([name, logoSrc]) => {
-            const existingClient = contentData.testimonials.clients.find((c: { name: string; logoSrc?: string }) => c.name === name);
-            return { 
-                name: name, 
-                logoSrc: logoSrc,
-                // Preserve other potential fields if they exist on existingClient
-                ...(existingClient || {}) 
-            };
-        });
       }
       
       setContent(contentData);
@@ -1116,7 +1037,6 @@ export default function NewSitePage() {
                           alt={project.title}
                           fill
                           className="object-cover"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Added sizes prop
                         />
                         {isAuthenticated && (
                           <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
@@ -1517,7 +1437,7 @@ export default function NewSitePage() {
                         <img 
                           src={client.logoSrc} 
                           alt={client.name}
-                          className="w-full h-full object-cover p-1" // Changed to object-cover and added padding
+                          className="max-w-full max-h-full object-contain"
                         />
                       ) : (
                         <div className="text-gray-700 dark:text-gray-200 font-medium text-sm text-center px-2">{client.name}</div>
