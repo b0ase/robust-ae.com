@@ -2,7 +2,14 @@
 export const siteContent = {
     hero: {
         title: "Robust Automation & Embedded Systems",
-        subtitle: "Engineering solutions for the modern world. Experts in industrial automation, embedded systems, and prototyping."
+        subtitle: "Engineering solutions for the modern world. Experts in industrial automation, embedded systems, and prototyping.",
+        images: [
+            "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2070", // Industrial Machine/Tech
+            "https://images.unsplash.com/photo-1565514020176-dbf2277e9e6e?auto=format&fit=crop&q=80&w=2070", // PCB Macro
+            "https://images.unsplash.com/photo-1537462713505-a1ceac92109e?auto=format&fit=crop&q=80&w=2076", // Factory/Robotics
+            "https://images.unsplash.com/photo-1622675363311-ac97f3b97933?auto=format&fit=crop&q=80&w=2070", // Automation
+            "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=2070", // Electronics
+        ]
     },
     services: {
         introTitle: "Our Expertise",
@@ -78,13 +85,13 @@ export const siteContent = {
                 title: 'Industrial Control System',
                 description: 'A comprehensive control system for manufacturing equipment, featuring real-time monitoring, predictive maintenance algorithms, and integration with existing factory systems.',
                 technologies: ['PLC', 'SCADA', 'HMI Design', 'ModBus'],
-                imageSrc: '/images/projects/Industrial_Control_System.jpg',
+                imageSrc: 'https://images.unsplash.com/photo-1580584126903-c17d41830450?auto=format&fit=crop&q=80&w=1000',
                 challenge: "The primary challenge was to integrate a legacy manufacturing line with modern IoT capabilities for real-time data acquisition and predictive maintenance without significant downtime.",
                 solution: "We developed a custom PLC program and SCADA interface, coupled with edge computing devices to gather sensor data. This data was then streamed to a cloud platform for analysis and dashboarding.",
                 results: "Achieved a 15% reduction in unplanned downtime and a 10% increase in overall equipment effectiveness (OEE) within the first six months.",
                 additionalImages: [
-                    { src: "/images/projects/industrial-detail-1.jpg", alt: "ICS Detail 1" },
-                    { src: "/images/projects/industrial-detail-2.jpg", alt: "ICS Detail 2" }
+                    { src: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800", alt: "ICS Detail 1" },
+                    { src: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=800", alt: "ICS Detail 2" }
                 ],
                 testimonial: {
                     quote: "Robust AE's solution for our control system has been a game-changer. The insights we get now are invaluable.",
@@ -97,13 +104,13 @@ export const siteContent = {
                 title: 'Smart Environmental Monitor',
                 description: 'A low-power IoT device for environmental monitoring in industrial settings. Features wireless connectivity, multiple sensor inputs, and cloud-based data analytics with alert capabilities.',
                 technologies: ['Custom PCB', 'ESP32', 'MQTT', 'Low Power Design'],
-                imageSrc: '/images/projects/Smart_Environmental_Monitor.jpg',
+                imageSrc: 'https://images.unsplash.com/photo-1558002038-1091a1661116?auto=format&fit=crop&q=80&w=1000',
                 challenge: "Designing a device that could operate for extended periods on battery power in harsh industrial environments while reliably transmitting data from multiple sensors.",
                 solution: "A custom-designed PCB with an ESP32 microcontroller, optimized for low-power consumption. Firmware was developed to manage sensor readings, data transmission via MQTT, and sleep cycles effectively.",
                 results: "The device achieved over 12 months of battery life on a single charge while providing critical environmental data, leading to improved safety and regulatory compliance.",
                 additionalImages: [
-                    { src: "/images/projects/env-monitor-detail-1.jpg", alt: "Env Monitor Detail 1" },
-                    { src: "/images/projects/env-monitor-detail-2.jpg", alt: "Env Monitor Detail 2" }
+                    { src: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800", alt: "Env Monitor Detail 1" },
+                    { src: "https://images.unsplash.com/photo-1555664424-778a1e5e1b48?auto=format&fit=crop&q=80&w=800", alt: "Env Monitor Detail 2" }
                 ],
                 testimonial: {
                     quote: "The smart environmental monitors from Robust AE have significantly improved our ability to track conditions in remote locations.",
@@ -116,13 +123,13 @@ export const siteContent = {
                 title: 'Precision Motor Controller',
                 description: 'A high-performance motor control system with closed-loop feedback. Features customizable PID parameters, torque and position control, and comprehensive safety features for industrial applications.',
                 technologies: ['STM32', 'FOC Algorithm', 'Real-time Control', 'CAN Interface'],
-                imageSrc: '/images/projects/Precision_Motor_Controller.jpg',
+                imageSrc: 'https://images.unsplash.com/photo-1537462713505-a1ceac92109e?auto=format&fit=crop&q=80&w=1000',
                 challenge: "Achieving sub-millisecond response times for motor control adjustments and ensuring high precision in a noisy industrial environment with fluctuating loads.",
                 solution: "An STM32-based controller implementing a Field-Oriented Control (FOC) algorithm. Advanced filtering and a robust CAN interface were used for reliable communication and control.",
                 results: "The controller delivered a 30% improvement in positioning accuracy and a 50% reduction in motor vibration, enhancing product quality in the client's automated assembly line.",
                 additionalImages: [
-                    { src: "/images/projects/motor-controller-detail-1.jpg", alt: "Motor Controller Detail 1" },
-                    { src: "/images/projects/motor-controller-detail-2.jpg", alt: "Motor Controller Detail 2" }
+                    { src: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=800", alt: "Motor Controller Detail 1" },
+                    { src: "https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?auto=format&fit=crop&q=80&w=800", alt: "Motor Controller Detail 2" }
                 ],
                 testimonial: {
                     quote: "The precision motor controller developed by Robust AE is the most stable and responsive we've ever used.",

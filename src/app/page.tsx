@@ -11,7 +11,8 @@ export default function Home() {
 
   // Hero carousel state
   const [currentHeroImage, setCurrentHeroImage] = useState(0);
-  const heroImages = Array.from({ length: 10 }, (_, i) => `/hero/${(i + 1).toString().padStart(2, '0')}.jpg`);
+  // Use images from siteContent if available, otherwise fallback
+  const heroImages = content.hero.images || Array.from({ length: 5 }, (_, i) => `/hero/${(i + 1).toString().padStart(2, '0')}.jpg`);
 
   // Smooth scroll function
   const scrollToSection = (sectionId: string, event: React.MouseEvent) => {
@@ -47,94 +48,97 @@ export default function Home() {
         `}</style>
 
         {/* Navigation Bar (Simple Static) */}
-        <nav className="fixed w-full z-50 bg-b0ase-dark bg-opacity-95 text-white shadow-lg backdrop-blur-sm border-b border-gray-800">
-          <div className="container mx-auto px-6 py-3 flex justify-between items-center">
+        <nav className="fixed w-full z-50 bg-black/80 text-white shadow-lg backdrop-blur-sm border-b border-gray-800">
+          <div className="container mx-auto px-6 py-4 flex justify-between items-center">
             <div className="flex items-center">
               <Image
                 src="/images/logos/AE vector-2.png"
                 alt="Robust AE Logo"
-                width={150}
-                height={50}
-                className="h-10 w-auto"
+                width={180}
+                height={60}
+                className="h-12 w-auto"
               />
             </div>
             <div className="hidden md:flex space-x-8">
-              <a href="#" className="hover:text-b0ase-blue transition">Home</a>
-              <a href="#services" onClick={(e) => scrollToSection('services', e)} className="hover:text-b0ase-blue transition">Services</a>
-              <a href="#projects" onClick={(e) => scrollToSection('projects', e)} className="hover:text-b0ase-blue transition">Projects</a>
-              <a href="#contact" onClick={(e) => scrollToSection('contact', e)} className="hover:text-b0ase-blue transition">Contact</a>
+              <a href="#" className="hover:text-b0ase-blue transition font-medium">Home</a>
+              <a href="#services" onClick={(e) => scrollToSection('services', e)} className="hover:text-b0ase-blue transition font-medium">Services</a>
+              <a href="#projects" onClick={(e) => scrollToSection('projects', e)} className="hover:text-b0ase-blue transition font-medium">Projects</a>
+              <a href="#contact" onClick={(e) => scrollToSection('contact', e)} className="hover:text-b0ase-blue transition font-medium">Contact</a>
             </div>
           </div>
         </nav>
 
-        {/* Hero Section */}
-        <section className="bg-b0ase-dark text-center py-24 px-4 md:py-32 md:px-6 border-b border-b0ase-card-border pt-32">
-          <div className="container mx-auto">
-            {/* Hero Image Carousel */}
-            <div className="relative w-full h-64 md:h-96 mx-auto mb-8 overflow-hidden rounded shadow-2xl border border-gray-800">
-              {heroImages.map((image, idx) => (
-                <div
-                  key={image}
-                  className={`absolute inset-0 transition-opacity duration-1000 ${idx === currentHeroImage ? 'opacity-100' : 'opacity-0'
-                    }`}
-                >
-                  <Image
-                    src={image}
-                    alt={`Robust AE Hero Image ${idx + 1}`}
-                    fill
-                    className="object-cover"
-                    priority={idx === 0}
-                  />
-                </div>
-              ))}
+        {/* Hero Section - Full Screen Impact */}
+        <section className="relative h-screen flex items-center justify-center overflow-hidden">
+          {/* Hero Background Carousel */}
+          <div className="absolute inset-0 z-0">
+            {heroImages.map((image, idx) => (
+              <div
+                key={image}
+                className={`absolute inset-0 transition-opacity duration-1000 ${idx === currentHeroImage ? 'opacity-100' : 'opacity-0'
+                  }`}
+              >
+                <Image
+                  src={image}
+                  alt={`Robust AE Hero Image ${idx + 1}`}
+                  fill
+                  className="object-cover"
+                  priority={idx === 0}
+                />
+                {/* Dark overlay for readability */}
+                <div className="absolute inset-0 bg-black/60"></div>
+              </div>
+            ))}
+          </div>
 
-              {/* Logo overlay on carousel */}
-              <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40">
+          <div className="container mx-auto px-4 relative z-10 text-center pt-20">
+            {/* Big Logo in Hero */}
+            <div className="mb-8 flex justify-center">
+              <div className="relative w-64 h-32 md:w-96 md:h-48">
                 <Image
                   src="/images/logos/AE vector-2.png"
                   alt="Robust AE Logo"
-                  width={300}
-                  height={100}
-                  className="z-10 drop-shadow-xl"
+                  fill
+                  className="object-contain drop-shadow-2xl"
                   priority
                 />
               </div>
-
-              {/* Navigation dots */}
-              <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 z-20">
-                {heroImages.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentHeroImage(idx)}
-                    className={`h-2 w-2 rounded-full transition-all shadow-sm ${idx === currentHeroImage ? 'bg-b0ase-blue w-6' : 'bg-gray-400 bg-opacity-70'}`}
-                    aria-label={`Go to slide ${idx + 1}`}
-                  />
-                ))}
-              </div>
             </div>
 
-            <h1 className="text-3xl md:text-5xl font-bold mb-4 text-white font-mono tracking-tight mt-12">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-white font-mono tracking-tight drop-shadow-lg">
               {content.hero.title}
             </h1>
-            <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+            <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-12 leading-relaxed drop-shadow-md">
               {content.hero.subtitle}
             </p>
             <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
               <a
                 href="#services"
                 onClick={(e) => scrollToSection('services', e)}
-                className="bg-b0ase-blue text-white font-semibold py-3 px-8 rounded hover:bg-opacity-90 transition duration-300 text-center shadow-lg hover:shadow-b0ase-blue/20"
+                className="bg-b0ase-blue text-white font-bold text-lg py-4 px-10 rounded hover:bg-blue-600 transition duration-300 text-center shadow-lg hover:shadow-b0ase-blue/30 transform hover:-translate-y-1"
               >
-                Our Services
+                Explore Services
               </a>
               <a
                 href="#contact"
                 onClick={(e) => scrollToSection('contact', e)}
-                className="bg-transparent border border-b0ase-blue text-b0ase-blue font-semibold py-3 px-8 rounded hover:bg-b0ase-blue hover:text-white transition duration-300 text-center"
+                className="bg-transparent border-2 border-white text-white font-bold text-lg py-4 px-10 rounded hover:bg-white hover:text-black transition duration-300 text-center shadow-lg transform hover:-translate-y-1"
               >
                 Contact Us
               </a>
             </div>
+          </div>
+
+          {/* Navigation dots */}
+          <div className="absolute bottom-8 left-0 right-0 flex justify-center space-x-3 z-20">
+            {heroImages.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentHeroImage(idx)}
+                className={`h-2.5 w-2.5 rounded-full transition-all shadow border border-white/50 ${idx === currentHeroImage ? 'bg-b0ase-blue w-8' : 'bg-transparent hover:bg-white/50'}`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
           </div>
         </section>
 
