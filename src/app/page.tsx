@@ -215,7 +215,7 @@ export default function Home() {
                 <div className="relative h-96 w-full rounded-2xl overflow-hidden border border-gray-700 shadow-2xl skew-y-1 transform transition hover:skew-y-0 duration-500">
                   {/* Reuse hero image for mission visual if no specific one */}
                   <Image
-                    src="/hero/02.jpg"
+                    src={heroImages[1]}
                     alt="Robust AE Technology"
                     fill
                     className="object-cover"
