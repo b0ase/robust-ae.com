@@ -15,20 +15,6 @@ export default function Home() {
   // Use images from siteContent if available, otherwise fallback
   const heroImages = content.hero.images || Array.from({ length: 5 }, (_, i) => `/hero/${(i + 1).toString().padStart(2, '0')}.jpg`);
 
-  // Smooth scroll function
-  const scrollToSection = (sectionId: string, event: React.MouseEvent) => {
-    event.preventDefault();
-
-    const section = document.getElementById(sectionId);
-    if (section) {
-      const offsetTop = section.getBoundingClientRect().top + window.pageYOffset;
-      window.scrollTo({
-        top: offsetTop,
-        behavior: 'smooth'
-      });
-    }
-  };
-
   // Effect to rotate through hero images
   useEffect(() => {
     const interval = setInterval(() => {
@@ -41,34 +27,6 @@ export default function Home() {
   return (
     <>
       <div>
-        {/* Helper for smooth scroll padding */}
-        <style jsx global>{`
-          html {
-            scroll-behavior: smooth;
-          }
-        `}</style>
-
-        {/* Navigation Bar (Simple Static) */}
-        <nav className="fixed w-full z-50 bg-black/80 text-white shadow-lg backdrop-blur-sm border-b border-gray-800">
-          <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div className="flex items-center">
-              <Image
-                src="/images/logos/AE vector-2.png"
-                alt="Robust AE Logo"
-                width={180}
-                height={60}
-                className="h-12 w-auto"
-              />
-            </div>
-            <div className="hidden md:flex space-x-8">
-              <a href="#" className="hover:text-b0ase-blue transition font-medium">Home</a>
-              <a href="#services" onClick={(e) => scrollToSection('services', e)} className="hover:text-b0ase-blue transition font-medium">Services</a>
-              <a href="#projects" onClick={(e) => scrollToSection('projects', e)} className="hover:text-b0ase-blue transition font-medium">Projects</a>
-              <a href="#contact" onClick={(e) => scrollToSection('contact', e)} className="hover:text-b0ase-blue transition font-medium">Contact</a>
-            </div>
-          </div>
-        </nav>
-
         {/* Hero Section - Full Screen Impact */}
         <section className="relative h-screen flex items-center justify-center overflow-hidden">
           {/* Hero Background Carousel */}
@@ -116,14 +74,12 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
                 <a
                   href="#services"
-                  onClick={(e) => scrollToSection('services', e)}
                   className="bg-b0ase-blue text-white font-bold text-lg py-4 px-10 rounded hover:bg-blue-600 transition duration-300 text-center shadow-lg hover:shadow-b0ase-blue/30 transform hover:-translate-y-1"
                 >
                   Explore Services
                 </a>
                 <a
                   href="#contact"
-                  onClick={(e) => scrollToSection('contact', e)}
                   className="bg-transparent border-2 border-white text-white font-bold text-lg py-4 px-10 rounded hover:bg-white hover:text-black transition duration-300 text-center shadow-lg transform hover:-translate-y-1"
                 >
                   Contact Us
@@ -181,9 +137,9 @@ export default function Home() {
                     <h3 className="text-xl font-bold mb-3 text-white">{service.title}</h3>
                     <p className="text-gray-400 mb-6 flex-grow leading-relaxed">{service.description}</p>
                     {/* Placeholder for service links if they existed */}
-                    <span className="text-b0ase-blue font-medium inline-flex items-center group-hover:translate-x-1 transition-transform">
+                    <Link href={`/services/${service.slug}`} className="text-b0ase-blue font-medium inline-flex items-center group-hover:translate-x-1 transition-transform">
                       Learn more &rarr;
-                    </span>
+                    </Link>
                   </div>
                 </StaggerItem>
               ))}
@@ -563,41 +519,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Footer */}
-        <footer className="bg-black py-12 px-6 border-t border-gray-900">
-          <div className="container mx-auto max-w-6xl">
-            <div className="flex flex-col md:flex-row justify-between items-center mb-12">
-              <div className="mb-6 md:mb-0">
-                <Image
-                  src="/images/logos/AE vector-2.png"
-                  alt="Robust AE Logo"
-                  width={180}
-                  height={60}
-                  className="h-12 w-auto opacity-80 hover:opacity-100 transition"
-                />
-                <p className="text-gray-500 text-sm mt-3 max-w-xs">Engineered for durability. Designed for performance.</p>
-              </div>
-
-              <div className="flex gap-8">
-                <div className="text-center md:text-right">
-                  <p className="text-gray-500 text-xs uppercase tracking-widest mb-2">Accreditations</p>
-                  <div className="flex gap-4 items-center justify-center md:justify-end">
-                    <span className="text-gray-600 text-sm font-bold">NAPIT #60482</span>
-                    <span className="text-gray-600 text-sm font-bold">IET #1100789092</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="border-t border-gray-900 pt-8 flex flex-col md:flex-row justify-between items-center">
-              <p className="text-gray-600 text-sm">&copy; {new Date().getFullYear()} Robust AE Ltd. Company No: 11269142. All rights reserved.</p>
-              <div className="flex space-x-6 mt-4 md:mt-0">
-                <a href="#" className="text-gray-600 hover:text-white text-sm transition">Privacy Policy</a>
-                <a href="#" className="text-gray-600 hover:text-white text-sm transition">Terms of Service</a>
-              </div>
-            </div>
-          </div>
-        </footer>
       </div>
     </>
   );

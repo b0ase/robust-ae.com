@@ -17,15 +17,69 @@ export const siteContent = {
         cards: [
             {
                 title: "Embedded Systems",
-                description: "Custom hardware and firmware development for IoT, industrial, and consumer applications."
+                slug: "embedded-systems",
+                description: "Custom hardware and firmware development for IoT, industrial, and consumer applications.",
+                details: {
+                    fullDescription: "We specialize in end-to-end embedded systems development, taking your concept from initial architecture to final production-ready hardware and firmware. Our team has extensive experience with a wide range of microcontrollers (ARM, AVR, ESP32) and connectivity protocols (BLE, WiFi, LoRa, cellular).",
+                    features: [
+                        "Custom PCB Design & Layout (Altium, KiCad)",
+                        "Firmware Development (C/C++, RTOS, Bare metal)",
+                        "Low-power optimization for battery operated devices",
+                        "IoT sensor node development",
+                        "Wireless connectivity integration"
+                    ],
+                    benefits: [
+                        "Optimized hardware cost and performance",
+                        "Reliable, maintainable codebases",
+                        "Seamless edge-to-cloud integration",
+                        "Rapid prototyping to accelerate time-to-market"
+                    ],
+                    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=2070"
+                }
             },
             {
                 title: "Industrial Automation",
-                description: "PLC programming, SCADA systems, and process optimization for manufacturing efficiency."
+                slug: "industrial-automation",
+                description: "PLC programming, SCADA systems, and process optimization for manufacturing efficiency.",
+                details: {
+                    fullDescription: "Modernize your manufacturing and industrial processes with our automation services. We design and implement robust control systems using industry-standard PLCs and develop intuitive HMI/SCADA interfaces for real-time monitoring and control. We focus on reliability, safety, and maximizing OEE.",
+                    features: [
+                        "PLC Programming (Siemens, Allen Bradley, Mitsubishi)",
+                        "HMI & SCADA System Design",
+                        "Industrial Network Capability (Profinet, Modbus, Ethernet/IP)",
+                        "Legacy Systems Retrofitting & Upgrades",
+                        "Safety Systems Integration"
+                    ],
+                    benefits: [
+                        "Increased production efficiency and throughput",
+                        "Reduced downtime through predictive maintenance data",
+                        "Enhanced operator safety",
+                        "Better visibility into process metrics"
+                    ],
+                    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2070"
+                }
             },
             {
                 title: "Prototyping & Production",
-                description: "From proof-of-concept to volume manufacturing, we guide you through the entire product lifecycle."
+                slug: "prototyping-production",
+                description: "From proof-of-concept to volume manufacturing, we guide you through the entire product lifecycle.",
+                details: {
+                    fullDescription: "Turning an idea into a tangible product requires a clearly defined process. We offer rapid prototyping services to test functionality and validate designs quickly. Once validated, we support the transition to mass production, handling DFM (Design for Manufacturing) reviews, compliance testing, and supply chain setup.",
+                    features: [
+                        "Rapid 3D Printing & Enclosure Design",
+                        "Quick-turn PCB Assembly",
+                        "Functional Testing & Validation Rigs",
+                        "Design for Manufacturing (DFM) Analysis",
+                        "Supply Chain & BOM Management"
+                    ],
+                    benefits: [
+                        "Fail fast, learn faster iterative process",
+                        "Reduced risk before committing to expensive tooling",
+                        "Smooth transition from prototype to production",
+                        "Regulatory compliance support (CE, FCC)"
+                    ],
+                    image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?auto=format&fit=crop&q=80&w=2070"
+                }
             }
         ]
     },
