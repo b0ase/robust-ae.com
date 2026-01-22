@@ -136,7 +136,7 @@ export const siteContent = {
     testimonials: {
         items: [
             {
-                quote: "Robust AE transformed our industrial control system. Their embedded expertise and dedication to quality delivered a solution that exceeded our expectations and revolutionized our manufacturing processes.",
+                quote: "Robust AE provided updates to our industrial control system. The team demonstrated knowledge in embedded systems and delivered a functional solution.",
                 name: "Sarah Johnson",
                 position: "CTO",
                 company: "MaxTech Industries",
@@ -144,7 +144,7 @@ export const siteContent = {
                 imageSrc: "/images/client-face-pics/sarah.jpg"
             },
             {
-                quote: "George did a great job leading the Robust AE team. His deep knowledge of both hardware and software development allowed them to solve problems other firms couldn't.",
+                quote: "George and his team completed the hardware and software development tasks. They resolved the assigned technical issues in a satisfactory manner.",
                 name: "Michael Chen",
                 position: "Engineering Director",
                 company: "Nexus Automation",
@@ -152,7 +152,7 @@ export const siteContent = {
                 imageSrc: "/images/client-face-pics/Michael.jpg"
             },
             {
-                quote: "Working with George and the Robust AE team on our IoT platform was a game-changer. Their technical expertise and reliable communication made the project seamless.",
+                quote: "We collaborated with Robust AE on an IoT platform. The project was completed according to the timeline and communication was consistent.",
                 name: "David Rodriguez",
                 position: "Product Manager",
                 company: "SmartSys Solutions",
@@ -160,7 +160,7 @@ export const siteContent = {
                 imageSrc: "/images/client-face-pics/david.jpg"
             },
             {
-                quote: "George delivered our Nuclear Aeronautical Submarine Laser Guidance System on time and within budget. His ability to integrate quantum entanglement with hypersonic targeting algorithms while underwater was simply extraordinary.",
+                quote: "The guidance system component was delivered on time. The integration with our target algorithms met the functional requirements and budget constraints.",
                 name: "Emma Wilson",
                 position: "Operations Director",
                 company: "Altitude Systems",
@@ -183,6 +183,7 @@ export const siteContent = {
     },
     contact: {
         title: "Get In Touch",
-        text: "Ready to start your next project? Contact us today for a consultation."
+        text: "Ready to start your next project? Contact us today for a consultation.",
+        cvUrl: "/George_Haworth_CV.pdf"
     }
 };
