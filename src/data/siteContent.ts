@@ -4,11 +4,11 @@ export const siteContent = {
         title: "Robust Automation & Embedded Systems",
         subtitle: "Engineering solutions for the modern world. Experts in industrial automation, embedded systems, and prototyping.",
         images: [
-            "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2070", // Industrial Machine/Tech
-            "https://images.unsplash.com/photo-1565514020176-dbf2277e9e6e?auto=format&fit=crop&q=80&w=2070", // PCB Macro
-            "https://images.unsplash.com/photo-1537462713505-a1ceac92109e?auto=format&fit=crop&q=80&w=2076", // Factory/Robotics
-            "https://images.unsplash.com/photo-1622675363311-ac97f3b97933?auto=format&fit=crop&q=80&w=2070", // Automation
-            "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=2070", // Electronics
+            "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2070", // Industrial Machine (Verified)
+            "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=2070", // Electronics (Verified)
+            "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?auto=format&fit=crop&q=80&w=2070", // Machinery (Verified)
+            "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&q=80&w=2070", // Automation (Verified)
+            "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2070", // Green Tech (Verified)
         ]
     },
     services: {
@@ -104,7 +104,7 @@ export const siteContent = {
                 title: 'Smart Environmental Monitor',
                 description: 'A low-power IoT device for environmental monitoring in industrial settings. Features wireless connectivity, multiple sensor inputs, and cloud-based data analytics with alert capabilities.',
                 technologies: ['Custom PCB', 'ESP32', 'MQTT', 'Low Power Design'],
-                imageSrc: 'https://images.unsplash.com/photo-1558002038-1091a1661116?auto=format&fit=crop&q=80&w=1000',
+                imageSrc: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1000',
                 challenge: "Designing a device that could operate for extended periods on battery power in harsh industrial environments while reliably transmitting data from multiple sensors.",
                 solution: "A custom-designed PCB with an ESP32 microcontroller, optimized for low-power consumption. Firmware was developed to manage sensor readings, data transmission via MQTT, and sleep cycles effectively.",
                 results: "The device achieved over 12 months of battery life on a single charge while providing critical environmental data, leading to improved safety and regulatory compliance.",
@@ -123,7 +123,7 @@ export const siteContent = {
                 title: 'Precision Motor Controller',
                 description: 'A high-performance motor control system with closed-loop feedback. Features customizable PID parameters, torque and position control, and comprehensive safety features for industrial applications.',
                 technologies: ['STM32', 'FOC Algorithm', 'Real-time Control', 'CAN Interface'],
-                imageSrc: 'https://images.unsplash.com/photo-1537462713505-a1ceac92109e?auto=format&fit=crop&q=80&w=1000',
+                imageSrc: 'https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?auto=format&fit=crop&q=80&w=1000',
                 challenge: "Achieving sub-millisecond response times for motor control adjustments and ensuring high precision in a noisy industrial environment with fluctuating loads.",
                 solution: "An STM32-based controller implementing a Field-Oriented Control (FOC) algorithm. Advanced filtering and a robust CAN interface were used for reliable communication and control.",
                 results: "The controller delivered a 30% improvement in positioning accuracy and a 50% reduction in motor vibration, enhancing product quality in the client's automated assembly line.",
